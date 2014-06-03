@@ -1,7 +1,7 @@
 package com.hp.manner.controller;
 
 import com.hp.manner.config.AppConfig;
-import com.hp.manner.config.DispatcherConfig;
+import com.hp.manner.config.WebMvcConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,11 +15,12 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.core.Is.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {AppConfig.class, DispatcherConfig.class})
+@ContextConfiguration(classes = {AppConfig.class, WebMvcConfig.class})
 public class BaseControllerTest {
 
     private MockMvc mockMvc;
@@ -40,10 +41,4 @@ public class BaseControllerTest {
                 .andExpect(jsonPath("$.message", is("Hello, World!")));
     }
 
-    @Test
-    public void testTest() throws Exception {
-        mockMvc.perform(get("/test"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("hello"));
-    }
 }

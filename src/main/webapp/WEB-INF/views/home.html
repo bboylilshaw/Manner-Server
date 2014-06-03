@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" href="../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="../resources/css/app.css" th:href="@{/resources/css/app.css}" />
+    <script type="javascript" src="../resources/js/jquery.min.1.11.0.js" th:src="@{/resources/js/jquery.min.1.11.0.js}"></script>
+    <script type="javascript" src="../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+    <h1 th:text="${title}">Title</h1>
+    <h1 th:text="${message}">Message</h1>
+    <div th:if="${#httpServletRequest.remoteUser != null}">
+        <p th:text="${#httpServletRequest.remoteUser}">
+            sample_user
+        </p>
+    </div>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Log out" />
+    </form>
+
+</body>
+</html>
