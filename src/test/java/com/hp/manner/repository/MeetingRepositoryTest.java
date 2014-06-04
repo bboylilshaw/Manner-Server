@@ -13,7 +13,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {AppConfig.class, MongodbConfig.class})
-public class MeetingMinutesRepositoryTest {
+public class MeetingRepositoryTest {
 
     @Autowired
     private MeetingRepository meetingRepository;

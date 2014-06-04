@@ -37,6 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/resources/**", "/signup").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/api/**").permitAll() //FIXME: add authentication for restful ws call
                 .anyRequest().authenticated()
                 .and()
             .formLogin()

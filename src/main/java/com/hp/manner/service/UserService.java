@@ -6,5 +6,8 @@ public interface UserService {
 
     public User signup(User user) throws Exception;
 
+    public User getUser(String userId);
+
     public User getUserByEmail(String email);
+
 }

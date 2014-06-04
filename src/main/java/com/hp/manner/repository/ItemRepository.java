@@ -10,5 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ItemRepository extends CrudRepository<Item, ObjectId> {
+
     public List<Item> findByOwner(User owner);
+
 }

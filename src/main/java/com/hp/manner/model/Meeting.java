@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Document
-public class MeetingMinutes implements Serializable {
+public class Meeting implements Serializable {
 
     @Id
     private ObjectId id;
