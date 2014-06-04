@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ItemService {
     public List<Item> viewActionItemsByOwner(String email);
+    public List<Item> listAllItems();
 }

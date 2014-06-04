@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
@@ -35,10 +36,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Bean
     public InternalResourceViewResolver jspViewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("/WEB-INF/views/");
+        viewResolver.setPrefix("/WEB-INF/views/jsp/");
         viewResolver.setSuffix(".jsp");
-        viewResolver.setViewNames(new String[]{"jsp/*"});
-        viewResolver.setOrder(1);
+        viewResolver.setViewClass(JstlView.class);
+        //viewResolver.setViewNames(new String[]{"jsp/*"});
+        viewResolver.setOrder(2);
         return viewResolver;
     }
 
@@ -63,7 +65,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public ThymeleafViewResolver thymeleafViewResolver() {
         ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
         thymeleafViewResolver.setTemplateEngine(templateEngine());
-        thymeleafViewResolver.setOrder(2);
+        thymeleafViewResolver.setOrder(1);
+        //thymeleafViewResolver.setViewNames(new String[]{"*.html,*.xhtml"});
         return thymeleafViewResolver;
     }
 
