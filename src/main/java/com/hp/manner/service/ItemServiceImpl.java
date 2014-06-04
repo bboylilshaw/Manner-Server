@@ -24,4 +24,9 @@ public class ItemServiceImpl implements ItemService {
 
         return itemRepository.findByOwner(user);
     }
+
+    @Override
+    public List<Item> listAllItems() {
+        return (List<Item>) itemRepository.findAll();
+    }
 }
