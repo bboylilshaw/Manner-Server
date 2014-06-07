@@ -20,8 +20,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    private org.springframework.security.core.userdetails.User userdetails;
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         boolean enabled = true;
@@ -30,17 +28,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         boolean accountNonLocked = true;
 
         User user = userRepository.findByEmail(email);
-        System.out.println(email);
-        System.out.println(user.getPassword());
 
-        userdetails = new org.springframework.security.core.userdetails.User(user.getEmail(),
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
                 user.getPassword(),
                 enabled,
                 accountNonExpired,
                 credentialsNonExpired,
                 accountNonLocked,
                 getAuthorities(user.getGroup()));
-        return userdetails;
     }
 
     public List<GrantedAuthority> getAuthorities(Set<String> group) {
@@ -51,7 +47,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         } else {
             authList.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
-        System.out.println(authList);
         return authList;
     }
 

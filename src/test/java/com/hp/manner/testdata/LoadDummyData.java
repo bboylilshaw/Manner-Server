@@ -51,7 +51,7 @@ public class LoadDummyData {
         User user2 = new User();
         user2.setFirstName("John");
         user2.setLastName("Smith");
-        user2.setEmail("jsmith@example.com");
+        user2.setEmail("john.smith@example.com");
         user2.setCommonName("John");
         user2.setPassword("123456");
         Set<String> groups2 = new HashSet<String>();

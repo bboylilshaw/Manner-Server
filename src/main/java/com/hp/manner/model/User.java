@@ -73,4 +73,10 @@ public class User {
     public void setGroup(Set<String> group) {
         this.group = group;
     }
+
+    @Override
+    public String toString() {
+        return "User(Name: " + this.firstName + " " + this.lastName + ", Email: " + this.email + ")";
+    }
+
 }

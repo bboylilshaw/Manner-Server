@@ -19,7 +19,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> listItemsByOwner(String userId) {
-        User user = userService.getUser(userId);
+        User user = userService.getUser(new ObjectId(userId));
         return itemRepository.findByOwner(user);
     }
 

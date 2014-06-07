@@ -1,13 +1,20 @@
 package com.hp.manner.service;
 
 import com.hp.manner.model.User;
+import org.bson.types.ObjectId;
+
+import java.util.List;
 
 public interface UserService {
 
-    public User signup(User user) throws Exception;
+    public List<User> listAllUsers();
 
-    public User getUser(String userId);
+    public User getUser(ObjectId id);
 
-    public User getUserByEmail(String email);
+    public User addUser(User user) throws Exception;
+
+    public User updateUser(User user) throws Exception;
+
+    public void deleteUser(ObjectId id) throws Exception;
 
 }

@@ -1,52 +1,51 @@
-<!DOCTYPE html>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head lang="en">
-    <meta charset="UTF-8"/>
+<head>
     <title>Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
     <link rel="stylesheet" href="../resources/css/app.css" th:href="@{/resources/css/app.css}" />
     <script type="javascript" src="../resources/js/jquery.min.1.11.0.js" th:src="@{/resources/js/jquery.min.1.11.0.js}"></script>
     <script type="javascript" src="../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
 </head>
 <body>
-
-<div class="container">
-    <div class="row centered-form">
-        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Please Login</h3>
+    <!--begin container-->
+    <div class="container">
+        <div class="row centered-form">
+            <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Please Login</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form th:action="@{/login}" method="post" role="form">
+                            <div th:if="${param.error}" class="alert alert-danger">
+                                Invalid username and password.
+                            </div>
+                            <div th:if="${param.logout}" class="alert alert-success">
+                                You have been logged out.
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="username" class="form-control" placeholder="Username"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" class="form-control" placeholder="Password"/>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="remember" type="checkbox" value="Remember Me"/> Remember Me
+                                    <a href="#" class="pull-right">Forgot Password?</a>
+                                </label>
+                            </div>
+                            <input type="submit" value="Login" class="btn btn-primary btn-block"/>
+                        </form>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <form th:action="@{/login}" method="post" role="form">
-                        <div th:if="${param.error}" class="alert alert-danger">
-                            Invalid username and password.
-                        </div>
-                        <div th:if="${param.logout}" class="alert alert-success">
-                            You have been logged out.
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="username" class="form-control" placeholder="Username"/>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="password" class="form-control" placeholder="Password"/>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input name="remember" type="checkbox" value="Remember Me"/> Remember Me
-                                <a href="#" class="pull-right">Forgot Password?</a>
-                            </label>
-                        </div>
-                        <input type="submit" value="Login" class="btn btn-primary btn-block"/>
-                    </form>
+                <div class="text-center">
+                    <a href="#">Don't have an account? Register</a>
                 </div>
-            </div>
-            <div class="text-center">
-                <a href="#">Don't have an account? Register</a>
             </div>
         </div>
-    </div>
-</div><!-- /container -->
-
+    </div><!-- end container -->
 </body>
 </html>
