@@ -1,12 +1,10 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Error</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
-    <link rel="stylesheet" href="../resources/css/app.css" th:href="@{/resources/css/app.css}" />
-    <script type="javascript" src="../resources/js/jquery.min.1.11.0.js" th:src="@{/resources/js/jquery.min.1.11.0.js}"></script>
-    <script type="javascript" src="../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="/resources/css/app.css" th:href="@{/resources/css/app.css}" />
 </head>
 <body>
     <h2 th:text="${errCode}">ErrorCode:</h2>

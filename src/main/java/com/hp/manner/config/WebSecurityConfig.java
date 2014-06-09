@@ -18,14 +18,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     //@Autowired
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//            .inMemoryAuthentication()
-//                .withUser("jason").password("123456").roles("USER")
-//                .and()
-//                .withUser("admin").password("123456").roles("ADMIN");
+        /*auth
+            .inMemoryAuthentication()
+                .withUser("jason").password("123456").roles("USER")
+                .and()
+                .withUser("admin").password("123456").roles("ADMIN");*/
         //ShaPasswordEncoder encoder = new ShaPasswordEncoder();
         //auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService); //FIXME: hash password
 
     }
 
@@ -42,9 +42,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .formLogin()
                 .loginPage("/login").permitAll()
-                .usernameParameter("username")
+                .usernameParameter("email")
                 .passwordParameter("password")
                 .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/home")
                 .and()
             .logout()
                 .permitAll();

@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {AppConfig.class, WebMvcConfig.class})
-public class BaseControllerTest {
+public class MainControllerTest {
 
     private MockMvc mockMvc;
 

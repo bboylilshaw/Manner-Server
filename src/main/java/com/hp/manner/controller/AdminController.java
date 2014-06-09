@@ -15,21 +15,21 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    public static final String ADMIN_HOME_PAGE = "admin_home";
-    public static final String ADMIN_USER_MANAGEMENT_PAGE = "user_manage";
+    public static final String ADMIN_HOME_PAGE = "admin/home.html";
+    public static final String ADMIN_USER_MANAGEMENT_PAGE = "admin/user_manage.html";
 
     @Autowired
     private UserServiceImpl userService;
 
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    @RequestMapping({ "/", "/index", "/home" })
     public String homePage(ModelMap modelMap) {
-        modelMap.addAttribute("title", "Manner - Admin Home Page");
+        modelMap.addAttribute("message", "This is Admin home Page");
         return ADMIN_HOME_PAGE;
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String userManagePage(ModelMap modelMap) {
-        modelMap.addAttribute("title", "Manner - User Management");
+        modelMap.addAttribute("message", "This is User management page");
         List<User> allUsers = userService.listAllUsers();
         modelMap.addAttribute("allUsers", allUsers);
         //modelMap.addAttribute("user", new User());

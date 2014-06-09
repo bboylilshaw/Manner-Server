@@ -10,13 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class GlobalExceptionController {
 
-    public static final String ERROR_PAGE = "error";
+    public static final String ERROR_PAGE = "error.html";
 
     @ExceptionHandler(AppException.class)
-    public ModelAndView handleCustomException(AppException ae) {
+    public ModelAndView handleCustomException(HttpServletRequest req, AppException ae) {
         ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
         modelAndView.addObject("errCode", ae.getErrCode());
         modelAndView.addObject("errMsg", ae.getErrMsg());
+        modelAndView.addObject("exception", ae);
+        modelAndView.addObject("url", req.getRequestURL());
         return modelAndView;
 
     }

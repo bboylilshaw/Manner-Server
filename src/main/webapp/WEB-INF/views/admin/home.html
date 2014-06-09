@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${title}">Home</title>
+    <title>Admin - Home</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
     <link rel="stylesheet" href="/resources/css/app.css" th:href="@{/resources/css/app.css}" />
@@ -15,7 +15,7 @@
                 <div class="form-group">
                     <div th:if="${#httpServletRequest.remoteUser != null}">
                         <div class="text-color-white" th:text="${#httpServletRequest.remoteUser}">
-                            sample_user
+                            Sample User
                         </div>
                     </div>
                 </div>
