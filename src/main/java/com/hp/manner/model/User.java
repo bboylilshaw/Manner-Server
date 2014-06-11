@@ -4,16 +4,33 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Set;
 
 @Document
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     private ObjectId id;
+
+    @NotNull
+    @Size(max = 5)
     private String firstName;
+
+    @NotNull
+    @Size(max = 5)
     private String lastName;
+
+    @NotNull
+    @Size(max = 5)
     private String commonName;
+
+    @NotNull
+    @Size(max = 5)
     private String email;
     private String password;
     private Set<String> group;
@@ -76,7 +93,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User(Name: " + this.firstName + " " + this.lastName + ", Email: " + this.email + ")";
+        return "User (Name: " + this.firstName + " " + this.lastName + ", Email: " + this.email + ")";
     }
 
 }

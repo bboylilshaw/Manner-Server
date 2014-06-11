@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.dialect.IDialect;
@@ -37,26 +38,24 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         configurer.enable();
     }
 
-    /*@Bean
-    public InternalResourceViewResolver jspViewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("/WEB-INF/views/jsp/");
-        viewResolver.setSuffix(".jsp");
-        //viewResolver.setViewClass(JstlView.class);
-        //viewResolver.setViewNames(new String[]{"jsp*//*"});
-        viewResolver.setOrder(2);
-        return viewResolver;
-    }*/
-
     @Bean
     public ServletContextTemplateResolver templateResolver() {
-        ServletContextTemplateResolver resolver = new ServletContextTemplateResolver();
-        resolver.setPrefix("/WEB-INF/views/");
+        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
+        templateResolver.setPrefix("/WEB-INF/views/");
         //resolver.setSuffix(".html");
-        resolver.setTemplateMode("HTML5");
-        resolver.setCharacterEncoding("UTF-8");
-        resolver.setCacheable(false); // default is true
-        return resolver;
+        templateResolver.setTemplateMode("HTML5");
+        templateResolver.setCharacterEncoding("UTF-8");
+        templateResolver.setCacheable(false); // default is true
+        return templateResolver;
+    }
+
+    @Bean
+    public ReloadableResourceBundleMessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setBasename("resources/i18n/messages");
+        messageSource.setCacheSeconds(1);
+        return messageSource;
     }
 
     @Bean
@@ -66,12 +65,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public SpringTemplateEngine templateEngine() {
-        SpringTemplateEngine engine = new SpringTemplateEngine();
-        engine.setTemplateResolver(templateResolver());
-        Set<IDialect> dialects = new HashSet<IDialect>();
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver());
+        Set<IDialect> dialects = new HashSet<>();
         dialects.add(springSecurityDialect());
-        engine.setAdditionalDialects(dialects); // add spring security dialect
-        return engine;
+        templateEngine.setAdditionalDialects(dialects); // add spring security dialect
+        return templateEngine;
     }
 
     @Bean

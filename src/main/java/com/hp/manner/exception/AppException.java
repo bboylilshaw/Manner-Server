@@ -23,6 +23,14 @@ public class AppException extends RuntimeException {
         this.errMsg = errMsg;
     }
 
+    public AppException() {
+        super();
+    }
+
+    public AppException(String errMsg) {
+        super(errMsg);
+    }
+
     public AppException(String errCode, String errMsg) {
         this.errCode = errCode;
         this.errMsg = errMsg;
