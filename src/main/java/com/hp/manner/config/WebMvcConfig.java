@@ -1,7 +1,6 @@
 package com.hp.manner.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
@@ -18,7 +17,6 @@ import java.util.Set;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.hp.manner.controller")
 @Import({ WebSecurityConfig.class })
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 

@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class RestItemController {
+public class ItemRestController {
 
     @Autowired
     private ItemServiceImpl itemService;

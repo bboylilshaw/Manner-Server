@@ -18,19 +18,19 @@ public class User implements Serializable {
     private ObjectId id;
 
     @NotNull
-    @Size(max = 5)
+    @Size(max = 30)
     private String firstName;
 
     @NotNull
-    @Size(max = 5)
+    @Size(max = 30)
     private String lastName;
 
     @NotNull
-    @Size(max = 5)
+    @Size(max = 30)
     private String commonName;
 
     @NotNull
-    @Size(max = 5)
+    @Size(max = 30)
     private String email;
     private String password;
     private Set<String> group;

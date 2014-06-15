@@ -11,6 +11,8 @@ public interface UserService {
 
     public User getUser(ObjectId id);
 
+    public User getUserByEmail(String email);
+
     public User addUser(User user) throws Exception;
 
     public User updateUser(User user) throws Exception;

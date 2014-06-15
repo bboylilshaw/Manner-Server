@@ -1,6 +1,7 @@
 package com.hp.manner.repository;
 
 import com.hp.manner.config.AppConfig;
+import com.hp.manner.config.WebMvcConfig;
 import com.hp.manner.model.Item;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = AppConfig.class)
+@ContextConfiguration(classes = {AppConfig.class, WebMvcConfig.class})
 public class ItemRepositoryTest {
 
     @Autowired
