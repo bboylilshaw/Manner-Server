@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -36,13 +37,15 @@ public class LoadDummyData {
     @Test
     public void loadDummyData() throws Exception {
         userRepository.deleteAll();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         User user1 = new User();
         user1.setFirstName("Yao");
         user1.setLastName("Xiao");
         user1.setEmail("yao.xiao@hp.com");
         user1.setCommonName("Jason");
-        user1.setPassword("123456");
+        user1.setPassword(encoder.encode("123456"));
+
         Set<String> groups1 = new HashSet<String>();
         groups1.add("BMI");
         groups1.add("Admin");
@@ -53,7 +56,7 @@ public class LoadDummyData {
         user2.setLastName("Smith");
         user2.setEmail("john.smith@example.com");
         user2.setCommonName("John");
-        user2.setPassword("123456");
+        user2.setPassword(encoder.encode("123456"));
         Set<String> groups2 = new HashSet<String>();
         groups2.add("BMI");
         user2.setGroup(groups2);
