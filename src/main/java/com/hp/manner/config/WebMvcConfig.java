@@ -1,8 +1,6 @@
 package com.hp.manner.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.*;
@@ -17,7 +15,9 @@ import java.util.Set;
 
 @Configuration
 @EnableWebMvc
+@EnableAspectJAutoProxy
 @Import({ WebSecurityConfig.class })
+@ComponentScan(basePackages = "com.hp.manner")
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override

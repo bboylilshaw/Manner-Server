@@ -2,6 +2,7 @@ package com.hp.manner.config;
 
 import com.hp.manner.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,17 +17,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
-    @Override
-    //@Autowired
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        /*auth
-            .inMemoryAuthentication()
-                .withUser("jason").password("123456").roles("USER")
-                .and()
-                .withUser("admin").password("123456").roles("ADMIN");*/
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
+    @Bean
+    public BCryptPasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        BCryptPasswordEncoder encoder = encoder();
+        auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
     }
 
     @Override

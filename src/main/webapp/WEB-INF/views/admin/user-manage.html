@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout/header.html :: header (#{admin.user.management})">
+</head>
+<body>
+
+    <div th:include="layout/navbar-top.html :: navbar">Navbar</div>
+    <!--begin container-->
+    <div class="container">
+        <div class="col-lg-5" th:include="admin/add-user.html :: add-user">Add User Fragment</div>
+        <div class="col-lg-8" th:include="admin/users.html :: users-list">User List Fragment</div>
+    </div><!--end container-->
+
+</body>
+</html>

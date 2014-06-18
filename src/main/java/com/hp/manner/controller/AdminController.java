@@ -21,7 +21,7 @@ public class AdminController {
     private static final Logger logger = Logger.getLogger(AdminController.class);
 
     public static final String ADMIN_HOME_PAGE = "admin/home.html";
-    public static final String ADMIN_USER_MANAGEMENT_PAGE = "admin/user_manage.html";
+    public static final String ADMIN_USER_MANAGEMENT_PAGE = "admin/user-manage.html";
 
     @Autowired
     private UserServiceImpl userService;

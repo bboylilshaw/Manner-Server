@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout/header.html :: header (#{profile})">
+    <link rel="stylesheet" href="/resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="/resources/css/app.css" th:href="@{/resources/css/app.css}" />
+</head>
+<body>
+
+    <div th:include="layout/navbar-top.html :: navbar">Navbar</div>
+    <!--begin container-->
+    <div class="container">
+        <h2 class="sub-header">My Profile:</h2>
+        <form action="#" th:action="@{/user/profile}" th:object="${user}" method="post" class="form-horizontal" role="form">
+            <input type="hidden" name="_method" value="PUT" />
+            <input type="hidden" name="id" th:field="*{id}" />
+            <input type="hidden" name="email" th:field="*{email}" />
+            <div th:if="${#fields.hasErrors('*')}" id="errMsg" class="alert alert-danger">
+                <ul>
+                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">First Name:</label>
+                <div class="col-md-4" th:classappend="${#fields.hasErrors('firstName')}?'has-error'">
+                    <input type="text" name="firstName" th:field="*{firstName}" class="form-control" placeholder="First Name" required="true"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Last Name:</label>
+                <div class="col-md-4" th:classappend="${#fields.hasErrors('lastName')}?'has-error'">
+                    <input type="text" name="lastName" th:field="*{lastName}" class="form-control" placeholder="Last Name" required="true"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Common Name:</label>
+                <div class="col-md-4" th:classappend="${#fields.hasErrors('commonName')}?'has-error'">
+                    <input type="text" name="commonName" th:field="*{commonName}" class="form-control" placeholder="Common Name" required="true"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-5">
+                    <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                </div>
+            </div>
+        </form>
+
+    </div><!--end container-->
+</body>
+</html>

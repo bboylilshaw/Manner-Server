@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout/header.html :: header">
+</head>
+<body>
+
+    <div th:fragment="users-list" th:unless="${#lists.isEmpty(allUsers)}">
+        <h2 class="sub-header">Users:</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Common Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${allUsers}" >
+                    <td th:text="${user.firstName}">Yao</td>
+                    <td th:text="${user.lastName}">Xiao</td>
+                    <td th:text="${user.commonName}">Jason</td>
+                    <td th:text="${user.email}">yao.xiao@hp.com</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

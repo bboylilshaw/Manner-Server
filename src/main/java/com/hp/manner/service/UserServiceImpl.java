@@ -7,10 +7,12 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @PropertySource("classpath:exception.properties")
@@ -23,6 +25,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     @Override
     public List<User> listAllUsers() {
@@ -47,6 +52,11 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new Exception(MessageFormat.format(env.getProperty("user.exists"), user.getEmail()));
         }
+
+        String tempPassword = UUID.randomUUID().toString().substring(0,8);
+        logger.info("temp password is: " + tempPassword);
+        user.setPassword(encoder.encode(tempPassword));
+
         logger.info("add " + user);
         return userRepository.save(user);
     }

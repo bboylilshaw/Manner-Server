@@ -41,7 +41,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public List<GrantedAuthority> getAuthorities(Set<String> group) {
         List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-        if (group.contains("Admin")) {
+        if (group.isEmpty()) {
+            authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+        } else if (group.contains("Admin")) {
             authList.add(new SimpleGrantedAuthority("ROLE_USER"));
             authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         } else {

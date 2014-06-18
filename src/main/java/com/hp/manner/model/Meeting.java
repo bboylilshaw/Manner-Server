@@ -5,15 +5,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 @Document
-public class Meeting implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Meeting {
 
     @Id
     private ObjectId id;

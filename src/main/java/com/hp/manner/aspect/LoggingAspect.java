@@ -19,14 +19,14 @@ public class LoggingAspect {
 
     @Before("selectAll()")
     public void beforeAdvice(JoinPoint joinPoint){
-        //logger.info("beforeAdvice() is running");
-        logger.info("Start executing method: " + joinPoint.getSignature());
+        //logger.debug("beforeAdvice() is running");
+        logger.debug("Start executing method: " + joinPoint.getSignature());
     }
 
     @After("selectAll()")
     public void afterAdvice(JoinPoint joinPoint){
-        //logger.info("afterAdvice() is running");
-        logger.info("End executing method: " + joinPoint.getSignature());
+        //logger.debug("afterAdvice() is running");
+        logger.debug("End executing method: " + joinPoint.getSignature());
     }
 
 
