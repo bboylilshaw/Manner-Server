@@ -1,38 +1,26 @@
 package com.hp.manner.service;
 
-import com.hp.manner.config.AppConfig;
-import com.hp.manner.config.WebMvcConfig;
 import com.hp.manner.model.User;
+import com.hp.manner.test.BaseTest;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(classes = {AppConfig.class, WebMvcConfig.class})
-public class UserServiceImplTest {
+public class UserServiceImplTest extends BaseTest {
 
     @Autowired
     private UserServiceImpl userService;
 
     @Before
     public void preTest() throws Exception {
-
+        super.resetMongoDB();
     }
 
     @After
     public void postTest() throws Exception {
-        User user = userService.getUserByEmail("dummy@dummy.com");
-        if (user != null){
-            userService.deleteUser(user.getId());
-        }
-
+        super.resetMongoDB();
     }
 
     @Test
@@ -54,7 +42,6 @@ public class UserServiceImplTest {
         user.setCommonName("DummyCommonName");
         user.setEmail("dummy@dummy.com");
         userService.addUser(user);
-        // since Spring MongoDB doesn't support transaction, rollback this adding operation in @After method
     }
 
     @Test

@@ -1,12 +1,12 @@
-package com.hp.manner.testdata;
+package com.hp.manner.test;
+
 
 import com.hp.manner.config.AppConfig;
+import com.hp.manner.config.WebMvcConfig;
 import com.hp.manner.model.Item;
 import com.hp.manner.model.User;
 import com.hp.manner.repository.ItemRepository;
 import com.hp.manner.repository.UserRepository;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,24 +20,19 @@ import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = AppConfig.class)
-public class LoadDummyData {
+@ContextConfiguration(classes = {AppConfig.class, WebMvcConfig.class})
+public class BaseTest {
 
     @Autowired
     private ItemRepository itemRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
-    @Before
-    public void setUp() throws Exception {
+    public void resetMongoDB() {
         userRepository.deleteAll();
         itemRepository.deleteAll();
-    }
-
-    @Test
-    public void loadDummyData() throws Exception {
-        userRepository.deleteAll();
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         User user1 = new User();
         user1.setFirstName("Yao");
@@ -46,7 +41,7 @@ public class LoadDummyData {
         user1.setCommonName("Jason");
         user1.setPassword(encoder.encode("123456"));
 
-        Set<String> groups1 = new HashSet<String>();
+        Set<String> groups1 = new HashSet<>();
         groups1.add("BMI");
         groups1.add("Admin");
         user1.setGroup(groups1);
@@ -57,7 +52,8 @@ public class LoadDummyData {
         user2.setEmail("john.smith@example.com");
         user2.setCommonName("John");
         user2.setPassword(encoder.encode("123456"));
-        Set<String> groups2 = new HashSet<String>();
+
+        Set<String> groups2 = new HashSet<>();
         groups2.add("BMI");
         user2.setGroup(groups2);
 
