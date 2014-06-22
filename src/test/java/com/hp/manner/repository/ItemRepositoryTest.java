@@ -31,8 +31,6 @@ public class ItemRepositoryTest {
     @Test
     public void testFindByOwner() throws Exception {
         List<Item> items = itemRepository.findByOwner(userRepository.findByEmail("yao.xiao@hp.com"));
-        for (Item item : items) {
-            System.out.println(item.getContent());
-        }
+        items.forEach(e -> System.out.println(e.getContent()));
     }
 }

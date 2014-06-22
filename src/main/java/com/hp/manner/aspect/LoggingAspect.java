@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoggingAspect {
 
-    private static final Logger logger = Logger.getLogger(LoggingAspect.class);
+    private final Logger logger = Logger.getLogger(getClass());
 
     @Pointcut("execution(* com.hp.manner.controller.*.*(..))")
     private void selectAll(){}
@@ -20,13 +20,13 @@ public class LoggingAspect {
     @Before("selectAll()")
     public void beforeAdvice(JoinPoint joinPoint){
         //logger.debug("beforeAdvice() is running");
-        logger.debug("Start executing method: " + joinPoint.getSignature());
+        logger.debug("before executing method: " + joinPoint.getSignature());
     }
 
     @After("selectAll()")
     public void afterAdvice(JoinPoint joinPoint){
         //logger.debug("afterAdvice() is running");
-        logger.debug("End executing method: " + joinPoint.getSignature());
+        logger.debug("after executing method: " + joinPoint.getSignature());
     }
 
 

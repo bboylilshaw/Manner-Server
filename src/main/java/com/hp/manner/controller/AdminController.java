@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private static final Logger logger = Logger.getLogger(AdminController.class);
+    private final Logger logger = Logger.getLogger(getClass());
 
     public static final String ADMIN_HOME_PAGE = "admin/home.html";
     public static final String ADMIN_USER_MANAGEMENT_PAGE = "admin/user-manage.html";
@@ -27,13 +27,14 @@ public class AdminController {
     private UserServiceImpl userService;
 
     @RequestMapping({ "/", "/index", "/home" })
-    public String homePage(ModelMap modelMap) {
+    public String renderAdminHomePage(ModelMap modelMap) {
+        logger.info("render admin home page.");
         modelMap.addAttribute("message", "This is Admin home Page");
         return ADMIN_HOME_PAGE;
     }
 
     @ModelAttribute("allUsers")
-    public List<User> users() {
+    public List<User> allUsers() {
         return userService.listAllUsers();
     }
 
@@ -43,13 +44,15 @@ public class AdminController {
     }
 
     @RequestMapping("/users")
-    public String userManagePage(ModelMap modelMap) {
+    public String renderUserManagementPage(ModelMap modelMap) {
+        logger.info("render admin - user management page.");
         modelMap.addAttribute("message", "This is User management page");
         return ADMIN_USER_MANAGEMENT_PAGE;
     }
 
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
     public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) throws Exception {
+        logger.info("add new user.");
         if (bindingResult.hasErrors()) {
             return ADMIN_USER_MANAGEMENT_PAGE;
         }

@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 
 @Configuration
 @EnableWebSecurity
@@ -20,6 +21,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public TokenBasedRememberMeServices rememberMeServices() {
+        return new TokenBasedRememberMeServices("manner", userDetailsService);
     }
 
     @Override
@@ -34,9 +40,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .headers().disable()
             .authorizeRequests()
-                .antMatchers("/resources/**", "/signup").permitAll()
+                .antMatchers("/resources/**", "/signup", "/api/**").permitAll() //FIXME: add authentication for restful web service api call
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/api/**").permitAll() //FIXME: add authentication for restful ws call
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
@@ -44,10 +49,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .loginProcessingUrl("/login")
+                .failureUrl("/login?error")
                 .defaultSuccessUrl("/home")
                 .and()
             .logout()
-                .permitAll();
+                .logoutUrl("/logout").permitAll()
+                .logoutSuccessUrl("/login?logout")
+                .deleteCookies("JSESSIONID")
+                .and()
+            .rememberMe()
+                .rememberMeServices(rememberMeServices())
+                .key("manner");
     }
 
 }

@@ -22,10 +22,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        boolean enabled = true;
-        boolean accountNonExpired = true;
-        boolean credentialsNonExpired = true;
-        boolean accountNonLocked = true;
+        final boolean enabled = true;
+        final boolean accountNonExpired = true;
+        final boolean credentialsNonExpired = true;
+        final boolean accountNonLocked = true;
 
         User user = userRepository.findByEmail(email);
 
@@ -40,8 +40,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     public List<GrantedAuthority> getAuthorities(Set<String> group) {
-        List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-        if (group.isEmpty()) {
+        List<GrantedAuthority> authList = new ArrayList<>();
+        if (group == null) {
             authList.add(new SimpleGrantedAuthority("ROLE_USER"));
         } else if (group.contains("Admin")) {
             authList.add(new SimpleGrantedAuthority("ROLE_USER"));

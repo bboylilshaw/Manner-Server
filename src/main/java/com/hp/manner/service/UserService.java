@@ -17,6 +17,10 @@ public interface UserService {
 
     public User updateUser(User user) throws Exception;
 
+    public User updateUserProfile(User user) throws Exception;
+
+    public User updateUserPassword(String email, String oldPassword, String newPassword) throws Exception;
+
     public void deleteUser(ObjectId id) throws Exception;
 
 }

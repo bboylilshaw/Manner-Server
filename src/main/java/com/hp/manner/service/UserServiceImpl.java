@@ -18,7 +18,7 @@ import java.util.UUID;
 @PropertySource("classpath:exception.properties")
 public class UserServiceImpl implements UserService {
 
-    private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
+    private final Logger logger = Logger.getLogger(getClass());
 
     @Autowired
     private Environment env;
@@ -61,13 +61,30 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    //TODO: Implement updateUser function
     @Override
     public User updateUser(User user) throws Exception {
-        if (!userRepository.exists(user.getId())) {
+        return null;
+    }
+
+    @Override
+    public User updateUserProfile(User user) throws Exception {
+        User userToUpdate = userRepository.findByEmail(user.getEmail());
+        if (userToUpdate == null) {
             throw new Exception(env.getProperty("user.not.exist"));
         }
         logger.info("update " + user);
-        return userRepository.save(user);
+        userToUpdate.setFirstName(user.getFirstName());
+        userToUpdate.setLastName(user.getLastName());
+        userToUpdate.setCommonName(user.getCommonName());
+        logger.info("updated to " + userToUpdate);
+        return userRepository.save(userToUpdate);
+    }
+
+    //TODO: Implement updateUserPassword function
+    @Override
+    public User updateUserPassword(String email, String oldPassword, String newPassword) throws Exception {
+        return null;
     }
 
     @Override

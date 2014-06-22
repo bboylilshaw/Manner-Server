@@ -32,9 +32,9 @@ public class MainControllerTest {
     }
 
     @Test
-    public void testHello() throws Exception {
+    public void testIndexPage() throws Exception {
         mockMvc.perform(get("/"))
-                .andExpect(status().isOk());
+               .andExpect(status().isOk());
     }
 
 }
