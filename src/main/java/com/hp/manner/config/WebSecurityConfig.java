@@ -15,6 +15,8 @@ import org.springframework.security.web.authentication.rememberme.TokenBasedReme
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String KEY = "manner";
+
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
@@ -25,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public TokenBasedRememberMeServices rememberMeServices() {
-        return new TokenBasedRememberMeServices("manner", userDetailsService);
+        return new TokenBasedRememberMeServices(KEY, userDetailsService);
     }
 
     @Override
@@ -59,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .rememberMe()
                 .rememberMeServices(rememberMeServices())
-                .key("manner");
+                .key(KEY);
     }
 
 }

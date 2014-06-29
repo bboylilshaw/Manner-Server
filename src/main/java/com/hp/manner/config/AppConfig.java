@@ -8,7 +8,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
 @Import({ MongodbConfig.class })
-@ComponentScan(basePackages = "com.hp.manner")
+@ComponentScan(basePackages = "com.hp.manner.config")
 public class AppConfig {
 
     @Bean

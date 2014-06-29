@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
     public User updateUserProfile(User user) throws Exception {
         User userToUpdate = userRepository.findByEmail(user.getEmail());
         if (userToUpdate == null) {
-            throw new Exception(env.getProperty("user.not.exist"));
+            throw new Exception(MessageFormat.format(env.getProperty("user.not.found"), user.getEmail()));
         }
         logger.info("update " + user);
         userToUpdate.setFirstName(user.getFirstName());
