@@ -18,7 +18,7 @@ public class ItemRestController {
     @Autowired
     private ItemServiceImpl itemService;
 
-    @RequestMapping(value = "/items/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/items", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Item> listAllItems() {
         return itemService.listAllItems();
     }

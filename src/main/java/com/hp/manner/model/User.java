@@ -1,5 +1,6 @@
 package com.hp.manner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.data.annotation.Id;
@@ -34,6 +35,7 @@ public class User {
     @Indexed(unique = true)
     private String email;
 
+    @JsonIgnore
     private String password;
     private Set<String> group;
 
