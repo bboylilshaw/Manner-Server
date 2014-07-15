@@ -26,8 +26,8 @@ public class MainController {
     private UserServiceImpl userService;
 
     @RequestMapping({ "/", "/index", "/home" })
-    public String renderUserHomePage(ModelMap modelMap) {
-        logger.info("render user home page.");
+    public String renderHomePage(ModelMap modelMap) {
+        logger.info("render home page.");
         modelMap.addAttribute("message", "This is home page!");
         return HOME_PAGE;
     }

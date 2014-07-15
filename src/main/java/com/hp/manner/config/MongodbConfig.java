@@ -11,6 +11,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import java.net.UnknownHostException;
+
 @Configuration
 @EnableMongoRepositories(basePackages = "com.hp.manner.repository")
 @PropertySource("classpath:mongodb.properties")
@@ -20,15 +22,32 @@ public class MongodbConfig {
     private Environment env;
 
     @Bean
-    public MongoDbFactory mongoDbFactory() throws Exception {
+    public MongoDbFactory mongoDbFactory() throws UnknownHostException {
         return new SimpleMongoDbFactory(new MongoClient(env.getProperty("mongodb.host"),
                 Integer.parseInt(env.getProperty("mongodb.port"))),
                 env.getProperty("mongodb.dbname"));
     }
 
     @Bean
-    public MongoTemplate mongoTemplate() throws Exception {
+    public MongoTemplate mongoTemplate() throws UnknownHostException {
         return new MongoTemplate(mongoDbFactory());
     }
+
+//    @Bean
+//    public MongoTypeMapper mongoTypeMapper() {
+//        return new DefaultMongoTypeMapper(null);
+//    }
+//
+//    @Bean
+//    public MongoMappingContext mongoMappingContext() {
+//        return new MongoMappingContext();
+//    }
+//
+//    @Bean
+//    public MappingMongoConverter mongoConverter() throws UnknownHostException {
+//        MappingMongoConverter converter = new MappingMongoConverter(mongoDbFactory(), mongoMappingContext());
+//        converter.setTypeMapper(mongoTypeMapper());
+//        return converter;
+//    }
 
 }

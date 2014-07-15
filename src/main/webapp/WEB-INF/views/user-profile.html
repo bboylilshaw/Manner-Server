@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:include="layout/header.html :: header (#{profile})">
-    <link rel="stylesheet" href="/resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
-    <link rel="stylesheet" href="/resources/css/app.css" th:href="@{/resources/css/app.css}" />
+<head th:include="fragments/head.html :: head (#{profile})">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="../../resources/css/app.css" th:href="@{/resources/css/app.css}" />
+    <script src="../../resources/js/jquery.min.1.11.0.js" th:src="@{/resources/js/jquery.min.1.11.0.js}"></script>
+    <script src="../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
 </head>
 <body>
 
-    <div th:include="layout/navbar-top.html :: navbar">Navbar</div>
+    <header th:include="fragments/header.html :: navbar-top">Navbar</header>
     <!--begin container-->
     <div class="container">
         <h2 class="sub-header">My Profile:</h2>
@@ -20,25 +22,25 @@
                 </ul>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label">First Name:</label>
-                <div class="col-md-4" th:classappend="${#fields.hasErrors('firstName')}?'has-error'">
+                <label class="col-sm-2 control-label">First Name:</label>
+                <div class="col-sm-4" th:classappend="${#fields.hasErrors('firstName')}?'has-error'">
                     <input type="text" name="firstName" th:field="*{firstName}" class="form-control" placeholder="First Name" required="true"/>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label">Last Name:</label>
-                <div class="col-md-4" th:classappend="${#fields.hasErrors('lastName')}?'has-error'">
+                <label class="col-sm-2 control-label">Last Name:</label>
+                <div class="col-sm-4" th:classappend="${#fields.hasErrors('lastName')}?'has-error'">
                     <input type="text" name="lastName" th:field="*{lastName}" class="form-control" placeholder="Last Name" required="true"/>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label">Common Name:</label>
-                <div class="col-md-4" th:classappend="${#fields.hasErrors('commonName')}?'has-error'">
+                <label class="col-sm-2 control-label">Common Name:</label>
+                <div class="col-sm-4" th:classappend="${#fields.hasErrors('commonName')}?'has-error'">
                     <input type="text" name="commonName" th:field="*{commonName}" class="form-control" placeholder="Common Name" required="true"/>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-md-offset-5">
+                <div class="col-sm-offset-5">
                     <button type="submit" class="btn btn-sm btn-primary">Update</button>
                 </div>
             </div>

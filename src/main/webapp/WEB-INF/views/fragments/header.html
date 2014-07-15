@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:include="layout/header.html :: header">
+<head th:include="fragments/head.html :: head">
+    <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="../../../resources/css/app.css" th:href="@{/resources/css/app.css}" />
+    <script src="../../../resources/js/jquery.min.1.11.0.js" th:src="@{/resources/js/jquery.min.1.11.0.js}"></script>
+    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
 </head>
 <body>
 
-    <div th:fragment="navbar">
-        <!-- begin fixed navbar -->
+    <div th:fragment="navbar-top">
+        <!-- begin fixed top navbar -->
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <form th:action="@{/logout}" method="post" class="navbar-form navbar-right" role="form">
@@ -15,7 +19,7 @@
                     <li><a href="#" th:href="@{/user/profile}" th:if="${#httpServletRequest.remoteUser != null}" th:text="${#httpServletRequest.remoteUser}">User Email Address</a></li>
                 </ul>
             </div>
-        </div><!--end fixed navbar-->
+        </div><!--end fixed top navbar-->
     </div>
 
 </body>

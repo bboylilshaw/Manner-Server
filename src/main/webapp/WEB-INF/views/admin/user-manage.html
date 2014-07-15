@@ -4,7 +4,7 @@
 </head>
 <body>
 
-    <div th:include="layout/navbar-top.html :: navbar">Navbar</div>
+    <header th:include="fragments/header.html :: navbar-top">Navbar</header>
     <!--begin container-->
     <div class="container">
         <div class="col-lg-5" th:include="admin/add-user.html :: add-user">Add User Fragment</div>

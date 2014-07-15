@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:include="layout/header.html :: header (#{login})">
+<head th:include="fragments/head.html :: head (#{login})">
+    <link rel="stylesheet" href="../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="../../resources/css/app.css" th:href="@{/resources/css/app.css}" />
+    <script src="../../resources/js/jquery.min.1.11.0.js" th:src="@{/resources/js/jquery.min.1.11.0.js}"></script>
+    <script src="../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
 </head>
 <body>
     <!--begin container-->
     <div class="container">
-        <div class="col-md-4 col-md-offset-4">
+        <div class="col-sm-4 col-sm-offset-4">
             <div id="loginPanel" class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Please Login</h3>

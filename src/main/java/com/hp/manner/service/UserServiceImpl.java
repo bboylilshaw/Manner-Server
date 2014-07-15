@@ -19,13 +19,10 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final Logger logger = Logger.getLogger(getClass());
-
     @Autowired
     private Environment env;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private BCryptPasswordEncoder encoder;
 
