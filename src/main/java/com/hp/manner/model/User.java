@@ -3,18 +3,22 @@ package com.hp.manner.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.Set;
 
 @Document
 public class User {
 
     @Id
+    //@JsonRawValue
     private ObjectId id;
 
     @NotNull(message = "First Name cannot be null!")
@@ -34,6 +38,14 @@ public class User {
     @Size(max = 50, message = "Email cannot be over 50 characters!")
     @Indexed(unique = true)
     private String email;
+
+    @CreatedDate
+    //@DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date createdDate;
+
+    @LastModifiedDate
+    //@DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date lastModifiedDate;
 
     @JsonIgnore
     private String password;
@@ -77,6 +89,22 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public String getPassword() {

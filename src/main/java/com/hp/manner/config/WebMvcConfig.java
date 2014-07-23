@@ -1,6 +1,9 @@
 package com.hp.manner.config;
 
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.*;
@@ -13,8 +16,8 @@ import org.thymeleaf.templateresolver.TemplateResolver;
 @Configuration
 @EnableWebMvc
 @EnableAspectJAutoProxy
-@Import({ WebSecurityConfig.class })
-@ComponentScan(basePackages = "com.hp.manner")
+//@Import({ WebSecurityConfig.class })
+@ComponentScan(basePackages = {"com.hp.manner.controller", "com.hp.manner.aspect"})
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     private static final String MESSAGE_SOURCE = "resources/i18n/messages";

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -14,6 +15,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import java.net.UnknownHostException;
 
 @Configuration
+@EnableMongoAuditing
 @EnableMongoRepositories(basePackages = "com.hp.manner.repository")
 @PropertySource("classpath:mongodb.properties")
 public class MongodbConfig {
@@ -32,6 +34,11 @@ public class MongodbConfig {
     public MongoTemplate mongoTemplate() throws UnknownHostException {
         return new MongoTemplate(mongoDbFactory());
     }
+
+//    @Bean
+//    public AuditorAware<AuditableUser> myAuditorProvider() {
+//        return new AuditorAwareImpl();
+//    }
 
 //    @Bean
 //    public MongoTypeMapper mongoTypeMapper() {

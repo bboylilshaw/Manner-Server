@@ -14,7 +14,7 @@ public class LoggingAspect {
 
     private final Logger logger = Logger.getLogger(getClass());
 
-    @Pointcut("execution(* com.hp.manner.controller.*.*(..))")
+    @Pointcut("execution(* com.hp.manner.controller..*.*(..))")
     private void selectAll(){}
 
     @Before("selectAll()")

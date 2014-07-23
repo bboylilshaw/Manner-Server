@@ -3,6 +3,7 @@ package com.hp.manner.test;
 
 import com.hp.manner.config.AppConfig;
 import com.hp.manner.config.WebMvcConfig;
+import com.hp.manner.config.WebSecurityConfig;
 import com.hp.manner.model.Item;
 import com.hp.manner.model.User;
 import com.hp.manner.repository.ItemRepository;
@@ -20,7 +21,7 @@ import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {AppConfig.class, WebMvcConfig.class})
+@ContextConfiguration(classes = {AppConfig.class, WebMvcConfig.class, WebSecurityConfig.class})
 public class BaseTest {
 
     @Autowired
