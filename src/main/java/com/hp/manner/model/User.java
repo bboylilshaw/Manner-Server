@@ -1,6 +1,8 @@
 package com.hp.manner.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.hp.manner.common.DateSerializer;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.data.annotation.CreatedDate;
@@ -40,11 +42,11 @@ public class User {
     private String email;
 
     @CreatedDate
-    //@DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = DateSerializer.class)
     private Date createdDate;
 
     @LastModifiedDate
-    //@DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = DateSerializer.class)
     private Date lastModifiedDate;
 
     @JsonIgnore

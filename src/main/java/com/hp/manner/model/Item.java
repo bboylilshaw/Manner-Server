@@ -1,7 +1,11 @@
 package com.hp.manner.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.hp.manner.common.DateSerializer;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,23 +20,37 @@ public class Item {
     private String subject;
     private String content;
     @DBRef
+    private User owner;
+    @DBRef
     private User createdBy;
+    @CreatedDate
+    @JsonSerialize(using = DateSerializer.class)
     private Date createdDate;
     @DBRef
     private User lastModifiedBy;
+    @LastModifiedDate
+    @JsonSerialize(using = DateSerializer.class)
     private Date lastModifiedDate;
-    @DBRef
-    private User owner;
-    private String status;
+    private Status status;
     private int percentage;
+    @JsonSerialize(using = DateSerializer.class)
     private Date dueDate;
+    @JsonSerialize(using = DateSerializer.class)
     private Date deferDate;
-    private String priority;
+    private Priority priority;
     private String category;
     private String remarks;
     private int level;
     private Set<String> tag;
     private String group;
+
+    public enum Status {
+        NEW, WORK_IN_PROGRESS, COMPLETE
+    }
+
+    public enum Priority {
+        LOW, MEDIUM, HIGH, URGENT
+    }
 
     public ObjectId getId() {
         return id;
@@ -56,6 +74,14 @@ public class Item {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public User getCreatedBy() {
@@ -90,19 +116,11 @@ public class Item {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -130,11 +148,11 @@ public class Item {
         this.deferDate = deferDate;
     }
 
-    public String getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
 
