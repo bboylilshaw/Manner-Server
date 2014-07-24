@@ -5,16 +5,15 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.hp.manner.common.DateSerializer;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Email;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.Set;
+import java.util.Map;
 
 @Document
 public class User {
@@ -45,13 +44,31 @@ public class User {
     @JsonSerialize(using = DateSerializer.class)
     private Date createdDate;
 
+    @CreatedBy
+    @DBRef
+    private User createdBy;
+
     @LastModifiedDate
     @JsonSerialize(using = DateSerializer.class)
     private Date lastModifiedDate;
 
+    @LastModifiedBy
+    @DBRef
+    private User lastModifiedBy;
+
     @JsonIgnore
     private String password;
-    private Set<String> group;
+
+    private Map<String, String> groups;
+
+    private Role role;
+
+    @Version
+    private Long version;
+
+    public enum Role {
+        SUPERADMIN, ADMIN, USER, GUEST
+    }
 
     public ObjectId getId() {
         return id;
@@ -101,12 +118,28 @@ public class User {
         this.createdDate = createdDate;
     }
 
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
+    }
+
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public User getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(User lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 
     public String getPassword() {
@@ -117,12 +150,28 @@ public class User {
         this.password = password;
     }
 
-    public Set<String> getGroup() {
-        return group;
+    public Map<String, String> getGroups() {
+        return groups;
     }
 
-    public void setGroup(Set<String> group) {
-        this.group = group;
+    public void setGroups(Map<String, String> groups) {
+        this.groups = groups;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     @Override

@@ -3,13 +3,13 @@ package com.hp.manner.test;
 
 import com.hp.manner.config.AppConfig;
 import com.hp.manner.config.WebMvcConfig;
-import com.hp.manner.config.WebSecurityConfig;
 import com.hp.manner.model.Item;
 import com.hp.manner.model.User;
 import com.hp.manner.repository.ItemRepository;
 import com.hp.manner.repository.UserRepository;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,7 +21,7 @@ import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {AppConfig.class, WebMvcConfig.class, WebSecurityConfig.class})
+@ContextConfiguration(classes = { AppConfig.class, WebMvcConfig.class })
 public class BaseTest {
 
     @Autowired
@@ -30,6 +30,8 @@ public class BaseTest {
     private UserRepository userRepository;
     @Autowired
     private BCryptPasswordEncoder encoder;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     public void resetMongoDB() {
         userRepository.deleteAll();

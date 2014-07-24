@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import java.net.UnknownHostException;
 
 @Configuration
-@EnableMongoAuditing
+@EnableMongoAuditing(auditorAwareRef = "mongodbAuditor")
 @EnableMongoRepositories(basePackages = "com.hp.manner.repository")
 @PropertySource("classpath:mongodb.properties")
 public class MongodbConfig {

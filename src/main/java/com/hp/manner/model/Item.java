@@ -3,12 +3,14 @@ package com.hp.manner.model;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.hp.manner.common.DateSerializer;
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
 
@@ -17,31 +19,55 @@ public class Item {
 
     @Id
     private ObjectId id;
+
     private String subject;
+
+    @NotNull
     private String content;
+
     @DBRef
     private User owner;
+
+    @CreatedBy
     @DBRef
     private User createdBy;
+
     @CreatedDate
     @JsonSerialize(using = DateSerializer.class)
     private Date createdDate;
+
+    @LastModifiedBy
     @DBRef
     private User lastModifiedBy;
+
     @LastModifiedDate
     @JsonSerialize(using = DateSerializer.class)
     private Date lastModifiedDate;
+
     private Status status;
+
+    @Min(0) @Max(100)
     private int percentage;
+
     @JsonSerialize(using = DateSerializer.class)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dueDate;
+
     @JsonSerialize(using = DateSerializer.class)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date deferDate;
+
     private Priority priority;
+
     private String category;
+
     private String remarks;
+
+    @Min(0) @Max(5)
     private int level;
+
     private Set<String> tag;
+
     private String group;
 
     public enum Status {
