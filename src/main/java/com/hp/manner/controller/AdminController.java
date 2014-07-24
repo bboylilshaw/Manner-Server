@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -51,10 +52,19 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
-    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) throws Exception {
+    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, HttpServletRequest req) throws Exception {
         logger.info("add new user.");
+        // check if there is any binding result errors first.
+        // If yes, return to same page with validation error messages.
+        // If no, then proceed.
         if (bindingResult.hasErrors()) {
             return ADMIN_USER_MANAGEMENT_PAGE;
+        }
+
+        if (req.getParameter("user-role").equalsIgnoreCase("admin")) {
+            user.setRole(User.Role.ADMIN);
+        } else {
+            user.setRole(User.Role.USER);
         }
         userService.addUser(user);
         return "redirect:/admin/users";

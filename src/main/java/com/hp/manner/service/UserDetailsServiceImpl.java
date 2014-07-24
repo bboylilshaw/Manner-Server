@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -36,17 +35,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 accountNonExpired,
                 credentialsNonExpired,
                 accountNonLocked,
-                getAuthorities(user.getGroup()));
+                getAuthorities(user.getRole()));
     }
 
-    public List<GrantedAuthority> getAuthorities(Set<String> group) {
+    public List<GrantedAuthority> getAuthorities(User.Role role) {
         List<GrantedAuthority> authList = new ArrayList<>();
-        if (group == null) {
-            authList.add(new SimpleGrantedAuthority("ROLE_USER"));
-        } else if (group.contains("Admin")) {
-            authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+        //GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
+        if (role.equals(User.Role.SUPERADMIN)) {
+            authList.add(new SimpleGrantedAuthority("ROLE_SUPERADMIN"));
             authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        } else {
+            authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+        } else if (role.equals(User.Role.ADMIN)) {
+            authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+        } else if (role.equals(User.Role.USER)) {
             authList.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
         return authList;

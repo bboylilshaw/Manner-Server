@@ -70,6 +70,9 @@ public class Item {
 
     private String group;
 
+    @Version
+    private Long version;
+
     public enum Status {
         NEW, WORK_IN_PROGRESS, COMPLETE
     }
@@ -220,5 +223,13 @@ public class Item {
 
     public void setGroup(String group) {
         this.group = group;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }

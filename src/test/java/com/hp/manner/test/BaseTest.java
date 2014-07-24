@@ -16,8 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -43,11 +43,12 @@ public class BaseTest {
         user1.setEmail("yao.xiao@hp.com");
         user1.setCommonName("Jason");
         user1.setPassword(encoder.encode("123456"));
+        user1.setRole(User.Role.ADMIN);
 
-        Set<String> groups1 = new HashSet<>();
-        groups1.add("BMI");
-        groups1.add("Admin");
-        user1.setGroup(groups1);
+        Map<String, String> groups1 = new HashMap<>();
+        groups1.put("BMI", "Lead");
+        groups1.put("Watson", "Member");
+        user1.setGroups(groups1);
 
         User user2 = new User();
         user2.setFirstName("John");
@@ -55,10 +56,11 @@ public class BaseTest {
         user2.setEmail("john.smith@example.com");
         user2.setCommonName("John");
         user2.setPassword(encoder.encode("123456"));
+        user2.setRole(User.Role.USER);
 
-        Set<String> groups2 = new HashSet<>();
-        groups2.add("BMI");
-        user2.setGroup(groups2);
+        Map<String, String> groups2 = new HashMap<>();
+        groups2.put("BMI", "Member");
+        user2.setGroups(groups2);
 
         userRepository.save(user1);
         userRepository.save(user2);
@@ -68,7 +70,7 @@ public class BaseTest {
         Item item1 = new Item();
         item1.setContent("Learn Spring Data Mongodb");
         item1.setPriority(Item.Priority.HIGH);
-        item1.setDueDate(new Date());
+        item1.setDueDate(new Date());// or new Date(1404172800000L) 2014-07-01 00:00:00
         item1.setStatus(Item.Status.NEW);
         item1.setPercentage(0);
         item1.setOwner(user);
@@ -76,7 +78,7 @@ public class BaseTest {
         Item item2 = new Item();
         item2.setContent("Learn Spring Security");
         item2.setPriority(Item.Priority.MEDIUM);
-        item2.setDueDate(new Date());
+        item2.setDueDate(new Date()); // or new Date(1404172800000L) 2014-07-01 00:00:00
         item2.setStatus(Item.Status.WORK_IN_PROGRESS);
         item2.setPercentage(50);
         item2.setOwner(user);

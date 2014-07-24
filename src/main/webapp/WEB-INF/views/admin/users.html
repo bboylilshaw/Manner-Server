@@ -9,22 +9,27 @@
 <body>
 
     <div th:fragment="users-list" th:unless="${#lists.isEmpty(allUsers)}">
-        <h2 class="sub-header">Users:</h2>
+        <h3 class="sub-header">User List</h3>
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Common Name</th>
                     <th>Email</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="user : ${allUsers}" >
+                <tr th:each="user, status : ${allUsers}" >
+                    <td th:text="${status.count}"></td>
                     <td th:text="${user.firstName}">Yao</td>
                     <td th:text="${user.lastName}">Xiao</td>
                     <td th:text="${user.commonName}">Jason</td>
                     <td th:text="${user.email}">yao.xiao@hp.com</td>
+                    <!-- use Spring EL to convert Enum and compare -->
+                    <td><span th:if="${user.role==T(com.hp.manner.model.User.Role).ADMIN}" class="label label-info">Admin</span></td>
                 </tr>
             </tbody>
         </table>
