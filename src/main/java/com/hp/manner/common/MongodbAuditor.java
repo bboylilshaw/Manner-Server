@@ -20,7 +20,7 @@ public class MongodbAuditor implements AuditorAware<User> {
     public User getCurrentAuditor() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         //String email = "yao.xiao@hp.com";
-        logger.debug("Current User is " + email);
+        logger.debug("Current Auditor is " + email);
         return userRepository.findByEmail(email);
     }
 }
