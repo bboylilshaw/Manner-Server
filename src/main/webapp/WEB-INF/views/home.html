@@ -4,7 +4,7 @@
 </head>
 <body>
 
-    <header th:include="fragments/header.html :: navbar-top">Navbar</header>
+    <header th:replace="fragments/header-navbar.html :: navbar-top">Header Navbar</header>
 
     <div class="container">
         <h1 class="well well-lg" th:text="${message}">Message</h1>

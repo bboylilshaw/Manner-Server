@@ -49,11 +49,11 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new Exception(MessageFormat.format(env.getProperty("user.exists"), user.getEmail()));
         }
-
-        String tempPassword = UUID.randomUUID().toString().substring(0,8);
-        logger.info("temp password is: " + tempPassword);
-        user.setPassword(encoder.encode(tempPassword));
-
+        if (user.getPassword() == null) {
+            String tempPassword = UUID.randomUUID().toString().substring(0,8);
+            logger.info("temp password is: " + tempPassword);
+            user.setPassword(encoder.encode(tempPassword));
+        }
         logger.info("add " + user);
         return userRepository.save(user);
     }

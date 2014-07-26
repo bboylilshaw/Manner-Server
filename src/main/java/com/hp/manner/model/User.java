@@ -176,7 +176,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User (Name: " + this.firstName + " " + this.lastName + ", Email: " + this.email + ")";
+        return "User[ Name: " + this.firstName + " " + this.lastName + ", Common Name: " + this.commonName + ", Email: " + this.email + " ]";
     }
 
 }
