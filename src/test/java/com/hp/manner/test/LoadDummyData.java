@@ -34,9 +34,8 @@ public class LoadDummyData extends BaseTest{
     }
 
     @Test
-    public void loadDummyUsersData() throws Exception {
+    public void loadDummyData() throws Exception {
         System.out.println("Load dummy users data.");
-
         User user1 = new User();
         user1.setFirstName("Yao");
         user1.setLastName("Xiao");
@@ -64,11 +63,8 @@ public class LoadDummyData extends BaseTest{
 
         userRepository.save(user1);
         userRepository.save(user2);
-    }
 
-    public void loadDummyItemsData() throws Exception {
         System.out.println("Load dummy items data.");
-
         User user = userRepository.findByEmail("yao.xiao@hp.com");
 
         Item item1 = new Item();
