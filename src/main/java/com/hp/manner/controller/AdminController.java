@@ -61,7 +61,7 @@ public class AdminController {
             return ADMIN_USER_MANAGEMENT_PAGE;
         }
 
-        if (req.getParameter("user-role").equalsIgnoreCase("admin")) {
+        if (req.getParameter("admin-user") != null ) {
             user.setRole(User.Role.ADMIN);
         } else {
             user.setRole(User.Role.USER);

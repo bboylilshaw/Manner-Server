@@ -1,12 +1,12 @@
 package com.hp.manner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.hp.manner.common.DateSerializer;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -50,11 +50,9 @@ public class Item {
     private int percentage;
 
     @JsonSerialize(using = DateSerializer.class)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dueDate;
 
     @JsonSerialize(using = DateSerializer.class)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date deferDate;
 
     private Priority priority;
@@ -70,6 +68,7 @@ public class Item {
 
     private String group;
 
+    @JsonIgnore
     @Version
     private Long version;
 

@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.hp.manner.common.DateSerializer;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.Email;
-import org.springframework.data.annotation.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
@@ -44,17 +46,9 @@ public class User {
     @JsonSerialize(using = DateSerializer.class)
     private Date createdDate;
 
-    @CreatedBy
-    @DBRef
-    private User createdBy;
-
     @LastModifiedDate
     @JsonSerialize(using = DateSerializer.class)
     private Date lastModifiedDate;
-
-    @LastModifiedBy
-    @DBRef
-    private User lastModifiedBy;
 
     @JsonIgnore
     private String password;
@@ -63,6 +57,7 @@ public class User {
 
     private Role role;
 
+    @JsonIgnore
     @Version
     private Long version;
 
@@ -118,28 +113,12 @@ public class User {
         this.createdDate = createdDate;
     }
 
-    public User getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(User createdBy) {
-        this.createdBy = createdBy;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public User getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(User lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
     }
 
     public String getPassword() {
@@ -176,7 +155,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User[ Name: " + this.firstName + " " + this.lastName + ", Common Name: " + this.commonName + ", Email: " + this.email + " ]";
+        return String.format("User[ Name: %s %s, Common Name: %s, Email: %s ]",
+                this.firstName, this.lastName, this.commonName, this.email);
     }
 
 }

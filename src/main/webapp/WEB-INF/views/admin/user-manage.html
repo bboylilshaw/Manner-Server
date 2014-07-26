@@ -7,8 +7,10 @@
     <header th:replace="fragments/header-navbar.html :: navbar-top">Header Navbar</header>
     <!--begin container-->
     <div class="container">
-        <div class="col-md-8" th:include="admin/add-user.html :: add-user">Add User Fragment</div>
-        <div class="col-md-8" th:include="admin/users.html :: users-list">User List Fragment</div>
+        <div class="row">
+            <div class="col-sm-12 col-md-8 col-lg-6" th:include="admin/add-user.html :: add-user">Add User Fragment</div>
+            <div class="col-sm-12 col-md-10 col-lg-8" th:include="admin/users.html :: users-list">User List Fragment</div>
+        </div>
     </div><!--end container-->
 
 </body>
