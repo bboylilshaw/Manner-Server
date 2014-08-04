@@ -1,5 +1,6 @@
 package com.hp.manner.service;
 
+import com.hp.manner.exception.UserExistsException;
 import com.hp.manner.model.User;
 import com.hp.manner.repository.UserRepository;
 import org.apache.log4j.Logger;
@@ -45,9 +46,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addUser(User user) throws Exception {
+    public User addUser(User user) throws UserExistsException {
         if (userRepository.findByEmail(user.getEmail()) != null) {
-            throw new Exception(MessageFormat.format(env.getProperty("user.exists"), user.getEmail()));
+            throw new UserExistsException(MessageFormat.format(env.getProperty("user.exists"), user.getEmail()));
         }
         if (user.getPassword() == null) {
             String tempPassword = UUID.randomUUID().toString().substring(0,8);

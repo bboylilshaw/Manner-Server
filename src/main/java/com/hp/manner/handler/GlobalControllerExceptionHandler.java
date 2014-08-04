@@ -22,12 +22,12 @@ public class GlobalControllerExceptionHandler {
 
     }
 
-    @ExceptionHandler(Exception.class)
-    public ModelAndView handleAllException(HttpServletRequest req,Exception e) {
-        ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
-        modelAndView.addObject("errMsg", e.getMessage());
-        modelAndView.addObject("exception", e);
-        modelAndView.addObject("url", req.getRequestURL());
-        return modelAndView;
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ModelAndView handleAllException(HttpServletRequest req,Exception e) {
+//        ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
+//        modelAndView.addObject("errMsg", e.getMessage());
+//        modelAndView.addObject("exception", e);
+//        modelAndView.addObject("url", req.getRequestURL());
+//        return modelAndView;
+//    }
 }

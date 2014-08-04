@@ -1,24 +1,22 @@
 package com.hp.manner.validator;
 
 import com.hp.manner.model.ChangePasswordForm;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-@Component
 public class PasswordValidator implements Validator {
 
     @Override
-    public boolean supports(Class<?> aClass) {
-        return ChangePasswordForm.class.equals(aClass);
+    public boolean supports(Class<?> clazz) {
+        return ChangePasswordForm.class.equals(clazz);
     }
 
     @Override
     public void validate(Object obj, Errors errors) {
-        ValidationUtils.rejectIfEmpty(errors, "oldPassword", "oldPassword.not.null");
-        ValidationUtils.rejectIfEmpty(errors, "newPassword", "newPassword.not.null");
-        ValidationUtils.rejectIfEmpty(errors, "confirmPassword", "confirmPassword.not.null");
+        ValidationUtils.rejectIfEmpty(errors, "oldPassword", "oldPassword.required");
+        ValidationUtils.rejectIfEmpty(errors, "newPassword", "newPassword.required");
+        ValidationUtils.rejectIfEmpty(errors, "confirmPassword", "confirmPassword.required");
 
         ChangePasswordForm changePasswordForm = (ChangePasswordForm) obj;
 

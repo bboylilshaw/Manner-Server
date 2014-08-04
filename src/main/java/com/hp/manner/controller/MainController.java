@@ -3,13 +3,12 @@ package com.hp.manner.controller;
 import com.hp.manner.model.ChangePasswordForm;
 import com.hp.manner.model.User;
 import com.hp.manner.service.UserServiceImpl;
+import com.hp.manner.validator.PasswordValidator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,13 +30,12 @@ public class MainController {
     @Autowired
     private UserServiceImpl userService;
 
-    @Autowired
-    @Qualifier("passwordValidator")
-    private Validator validator;
-
     @InitBinder
     private void initBinder(WebDataBinder binder) {
-        binder.setValidator(validator);
+        if (binder.getTarget().equals(ChangePasswordForm.class)) {
+            logger.info("binding password validator.");
+            binder.setValidator(new PasswordValidator());
+        }
     }
 
     @ModelAttribute("changePasswordForm")
@@ -80,6 +78,7 @@ public class MainController {
     @RequestMapping(value = "/user/password", method = RequestMethod.POST)
     public String changePassword(@Valid @ModelAttribute("changePasswordForm") ChangePasswordForm changePasswordForm, BindingResult bindingResult) throws Exception {
         logger.info("render change password page.");
+        //passwordValidator.validate(changePasswordForm, bindingResult.);
         return CHANGE_PASSWORD_PAGE;
     }
 

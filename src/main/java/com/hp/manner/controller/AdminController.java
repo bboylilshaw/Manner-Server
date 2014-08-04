@@ -1,5 +1,6 @@
 package com.hp.manner.controller;
 
+import com.hp.manner.exception.UserExistsException;
 import com.hp.manner.model.User;
 import com.hp.manner.service.UserServiceImpl;
 import org.apache.log4j.Logger;
@@ -52,7 +53,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
-    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, HttpServletRequest req) throws Exception {
+    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, HttpServletRequest req) {
         logger.info("add new user.");
         // check if there is any binding result errors first.
         // If yes, return to same page with validation error messages.
@@ -66,7 +67,15 @@ public class AdminController {
         } else {
             user.setRole(User.Role.USER);
         }
-        userService.addUser(user);
+
+        try {
+            userService.addUser(user);
+        } catch (UserExistsException e) {
+            //bindingResult.getFieldErrors().add(new FieldError("user", "email", e.getMessage()));
+            //errors.addAllErrors(new FieldError("user", "email", e.getMessage()));
+            logger.error(e.getMessage());
+            return ADMIN_USER_MANAGEMENT_PAGE;
+        }
         return "redirect:/admin/users";
     }
 
