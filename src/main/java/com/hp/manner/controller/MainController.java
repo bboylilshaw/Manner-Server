@@ -32,11 +32,18 @@ public class MainController {
 
     @InitBinder
     private void initBinder(WebDataBinder binder) {
-        if (binder.getTarget().equals(ChangePasswordForm.class)) {
+        if (binder.getTarget().getClass().equals(ChangePasswordForm.class)) {
+            logger.info(binder.getObjectName());
             logger.info("binding password validator.");
-            binder.setValidator(new PasswordValidator());
+            binder.addValidators(new PasswordValidator());
         }
     }
+
+    @ModelAttribute("user")
+    public User user() {
+        return new User();
+    }
+
 
     @ModelAttribute("changePasswordForm")
     public ChangePasswordForm changePasswordForm() {
@@ -65,6 +72,7 @@ public class MainController {
         if (bindingResult.hasErrors()) {
             return USER_PROFILE_PAGE;
         }
+        //BeanUtils.copyProperties(userService.getUser());
         userService.updateUserProfile(user);
         return "redirect:/home";
     }

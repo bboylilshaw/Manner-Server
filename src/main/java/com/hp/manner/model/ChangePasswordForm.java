@@ -1,9 +1,16 @@
 package com.hp.manner.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class ChangePasswordForm {
 
+    @NotEmpty
     private String oldPassword;
+
+    @NotEmpty
     private String newPassword;
+
+    @NotEmpty
     private String confirmPassword;
 
     public String getOldPassword() {

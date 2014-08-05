@@ -17,7 +17,7 @@ import org.thymeleaf.templateresolver.TemplateResolver;
 @ComponentScan(basePackages = {"com.hp.manner.controller", "com.hp.manner.aspect"})
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-    private static final String MESSAGE_SOURCE = "resources/i18n/messages";
+    private static final String MESSAGE_BASE_NAME = "resources/i18n/messages";
     private static final String VIEWS = "/WEB-INF/views/";
 
     private static final String RESOURCES_HANDLER = "/resources/**";
@@ -56,7 +56,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Bean
     public ReloadableResourceBundleMessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename(MESSAGE_SOURCE);
+        messageSource.setBasename(MESSAGE_BASE_NAME);
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setCacheSeconds(5);
         return messageSource;
@@ -66,6 +66,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
+        templateEngine.setMessageSource(messageSource());
         templateEngine.addDialect(new SpringSecurityDialect()); // add spring security dialect
         return templateEngine;
     }

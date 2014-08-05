@@ -2,7 +2,6 @@ package com.hp.manner.validator;
 
 import com.hp.manner.model.ChangePasswordForm;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 public class PasswordValidator implements Validator {
@@ -14,9 +13,6 @@ public class PasswordValidator implements Validator {
 
     @Override
     public void validate(Object obj, Errors errors) {
-        ValidationUtils.rejectIfEmpty(errors, "oldPassword", "oldPassword.required");
-        ValidationUtils.rejectIfEmpty(errors, "newPassword", "newPassword.required");
-        ValidationUtils.rejectIfEmpty(errors, "confirmPassword", "confirmPassword.required");
 
         ChangePasswordForm changePasswordForm = (ChangePasswordForm) obj;
 
