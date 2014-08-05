@@ -2,9 +2,11 @@ package com.hp.manner.service;
 
 import com.hp.manner.exception.UserExistsException;
 import com.hp.manner.model.User;
+import com.hp.manner.model.UserProfile;
 import com.hp.manner.repository.UserRepository;
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -66,23 +68,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserProfile(User user) throws Exception {
-        User userToUpdate = userRepository.findByEmail(user.getEmail());
+    public User updateUserProfile(String email, UserProfile userProfile) throws Exception {
+        User userToUpdate = userRepository.findByEmail(email);
         if (userToUpdate == null) {
-            throw new Exception(MessageFormat.format(env.getProperty("user.not.found"), user.getEmail()));
+            throw new Exception(MessageFormat.format(env.getProperty("user.not.found"), email));
         }
-        logger.info("update " + user);
-        userToUpdate.setFirstName(user.getFirstName());
-        userToUpdate.setLastName(user.getLastName());
-        userToUpdate.setCommonName(user.getCommonName());
+        logger.info("update " + userToUpdate);
+        BeanUtils.copyProperties(userProfile, userToUpdate);
+        logger.info(userToUpdate);
         logger.info("updated to " + userToUpdate);
         return userRepository.save(userToUpdate);
     }
 
-    //TODO: Implement updateUserPassword function
     @Override
     public User updateUserPassword(String email, String oldPassword, String newPassword) throws Exception {
-        return null;
+        User user = userRepository.findByEmail(email);
+        if(!encoder.matches(oldPassword, user.getPassword())) {
+            throw new Exception("old password is incorrect");
+        }
+        user.setPassword(encoder.encode(newPassword));
+        return userRepository.save(user);
     }
 
     @Override

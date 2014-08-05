@@ -53,7 +53,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
-    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, HttpServletRequest req) {
+    public String addUser(@Valid @ModelAttribute("user") User user, ModelMap modelMap, BindingResult bindingResult, HttpServletRequest req) {
         logger.info("add new user.");
         // check if there is any binding result errors first.
         // If yes, return to same page with validation error messages.
@@ -68,11 +68,12 @@ public class AdminController {
             user.setRole(User.Role.USER);
         }
 
+        //FIXME
+        //userService.addUser(user);
         try {
             userService.addUser(user);
         } catch (UserExistsException e) {
-            //bindingResult.getFieldErrors().add(new FieldError("user", "email", e.getMessage()));
-            //errors.addAllErrors(new FieldError("user", "email", e.getMessage()));
+            modelMap.addAttribute("error", e.getMessage());
             logger.error(e.getMessage());
             return ADMIN_USER_MANAGEMENT_PAGE;
         }

@@ -1,6 +1,7 @@
 package com.hp.manner.service;
 
 import com.hp.manner.model.User;
+import com.hp.manner.model.UserProfile;
 import org.bson.types.ObjectId;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface UserService {
 
     public User updateUser(User user) throws Exception;
 
-    public User updateUserProfile(User user) throws Exception;
+    public User updateUserProfile(String email, UserProfile userProfile) throws Exception;
 
     public User updateUserPassword(String email, String oldPassword, String newPassword) throws Exception;
 

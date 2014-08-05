@@ -19,6 +19,11 @@
                         <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
                     </ul>
                 </div>
+                <div th:if="${error != null}" class="alert alert-danger">
+                    <ul>
+                        <li th:text="${error}">Email already exists</li>
+                    </ul>
+                </div>
                 <div class="form-group">
                     <div class="col-xs-12 col-sm-6" th:classappend="${#fields.hasErrors('firstName')}?'has-error'">
                         <div class="input-group">

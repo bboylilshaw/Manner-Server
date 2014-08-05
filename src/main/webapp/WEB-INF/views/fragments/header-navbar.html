@@ -16,11 +16,11 @@
                 <!-- navbar header-->
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#" th:href="@{/home}">Team Manner</a>
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
-                        <!--<span class="icon-bar"></span>-->
-                        <!--<span class="icon-bar"></span>-->
-                        <!--<span class="icon-bar"></span>-->
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                     </button>
                 </div>
 
@@ -28,8 +28,8 @@
                     <!--<button type="submit" class="btn btn-link">Logout</button>-->
                 </form>
 
-                <div th:if="${#httpServletRequest.remoteUser != null}" class="navbar-collapse collapse" id="navbar-collapse" style="height: auto;">
-                    <ul class="nav navbar-nav navbar-right">
+                <div th:if="${#httpServletRequest.remoteUser != null}" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav pull-right">
                         <li><a href="#" th:text="${#httpServletRequest.remoteUser}">Username<span class="navbar-new">2</span></a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
