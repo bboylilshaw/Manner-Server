@@ -15,7 +15,7 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(AppException.class)
     public ModelAndView handleCustomException(HttpServletRequest req, AppException ae) {
         ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
-        modelAndView.addObject("errMsg", ae.getErrMsg());
+        modelAndView.addObject("message", ae.getMessage());
         modelAndView.addObject("exception", ae);
         modelAndView.addObject("url", req.getRequestURL());
         return modelAndView;

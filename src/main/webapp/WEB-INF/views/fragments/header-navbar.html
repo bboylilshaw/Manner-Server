@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:include="fragments/head.html :: head">
     <link rel="stylesheet" href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" />
     <link rel="stylesheet" href="../../../resources/css/flat-ui.css" th:href="@{/resources/css/flat-ui.css}" />
@@ -28,9 +28,14 @@
                     <!--<button type="submit" class="btn btn-link">Logout</button>-->
                 </form>
 
-                <div th:if="${#httpServletRequest.remoteUser != null}" class="navbar-collapse collapse">
+                <div th:if="${#authentication.authenticated}" class="navbar-collapse collapse">
+
+                    <ul id="navbar-menu" class="nav navbar-nav" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <li><a href="#" th:href="@{/admin/users}">Users Managements</a></li>
+                    </ul>
+
                     <ul class="nav navbar-nav pull-right">
-                        <li><a href="#" th:text="${#httpServletRequest.remoteUser}">Username<span class="navbar-new">2</span></a></li>
+                        <li><a href="#" th:text="${#authentication.name}">Username<span class="navbar-new">2</span></a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 Settings <b class="caret"></b>
@@ -47,6 +52,12 @@
                 </div>
             </div>
         </nav><!--end fixed top navbar-->
+        <script>
+            $(function(){
+                var path = window.location.pathname;
+                $('#navbar-menu').find('a[href="'+ path +'"]').parent().addClass('active');
+            });
+        </script>
     </header>
 
 </body>

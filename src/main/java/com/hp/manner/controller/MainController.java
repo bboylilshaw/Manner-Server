@@ -7,6 +7,7 @@ import com.hp.manner.validator.PasswordValidator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -40,21 +41,16 @@ public class MainController {
         }
     }
 
-    @ModelAttribute("changePasswordForm")
-    public ChangePasswordForm changePasswordForm() {
-        return new ChangePasswordForm();
-    }
-
     @RequestMapping({"/", "/index", "/home"})
     public String renderHomePage(ModelMap modelMap) {
-        logger.info("render home page.");
+        logger.info("rendering User home page - " + HOME_PAGE);
         modelMap.addAttribute("message", "This is home page!");
         return HOME_PAGE;
     }
 
     @RequestMapping("/user/profile")
     public String renderUserProfilePage(ModelMap modelMap, HttpServletRequest req) {
-        logger.info("render user profile page - " + USER_PROFILE_PAGE);
+        logger.info("rendering User profile page - " + USER_PROFILE_PAGE);
         String email = req.getRemoteUser();
         logger.debug("user's email is: " + email);
         UserProfile userProfile = new UserProfile();
@@ -64,30 +60,40 @@ public class MainController {
     }
 
     @RequestMapping(value = "/user/profile", method = RequestMethod.PUT)
-    public String updateUserProfile(@Valid @ModelAttribute("userProfile") UserProfile userProfile, BindingResult bindingResult, HttpServletRequest req) throws Exception {
+    public String updateUserProfile(@Valid @ModelAttribute("userProfile") UserProfile userProfile, BindingResult bindingResult) {
         logger.info("update user's profile.");
         if (bindingResult.hasErrors()) {
             return USER_PROFILE_PAGE;
         }
-        String email = req.getRemoteUser();
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
         userService.updateUserProfile(email, userProfile);
         return "redirect:/home";
     }
 
     @RequestMapping(value = "/user/password", method = RequestMethod.GET)
-    public String renderChangePasswordPage() {
-        logger.info("render change password page - " + CHANGE_PASSWORD_PAGE);
+    public String renderChangePasswordPage(ModelMap modelMap) {
+        logger.info("rendering change password page - " + CHANGE_PASSWORD_PAGE);
+        modelMap.addAttribute("changePasswordForm", new ChangePasswordForm());
         return CHANGE_PASSWORD_PAGE;
     }
 
     @RequestMapping(value = "/user/password", method = RequestMethod.POST)
-    public String changePassword(@Valid @ModelAttribute("changePasswordForm") ChangePasswordForm changePasswordForm, BindingResult bindingResult, HttpServletRequest req) throws Exception {
-        logger.info("render change password page.");
+    public String changePassword(@Valid @ModelAttribute("changePasswordForm") ChangePasswordForm changePasswordForm, ModelMap modelMap, BindingResult bindingResult) {
+        logger.info("update user's password.");
         if (bindingResult.hasErrors()) {
             return CHANGE_PASSWORD_PAGE;
         }
-        String email = req.getRemoteUser();
-        userService.updateUserPassword(email, changePasswordForm.getOldPassword(), changePasswordForm.getNewPassword());
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        //userService.updateUserPassword(email, changePasswordForm.getOldPassword(), changePasswordForm.getNewPassword());
+        try {
+            userService.updateUserPassword(email, changePasswordForm.getOldPassword(), changePasswordForm.getNewPassword());
+        } catch (Exception e) {
+            modelMap.addAttribute("passwordError", e.getMessage());
+            logger.error(e.getStackTrace());
+            return CHANGE_PASSWORD_PAGE;
+        }
         return "redirect:/home";
     }
 

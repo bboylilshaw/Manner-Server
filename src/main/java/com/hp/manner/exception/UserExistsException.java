@@ -17,7 +17,4 @@ public class UserExistsException extends Exception {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }

@@ -1,5 +1,6 @@
 package com.hp.manner.service;
 
+import com.hp.manner.exception.AppException;
 import com.hp.manner.exception.UserExistsException;
 import com.hp.manner.model.User;
 import com.hp.manner.model.UserProfile;
@@ -68,10 +69,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserProfile(String email, UserProfile userProfile) throws Exception {
+    public User updateUserProfile(String email, UserProfile userProfile) throws AppException {
         User userToUpdate = userRepository.findByEmail(email);
         if (userToUpdate == null) {
-            throw new Exception(MessageFormat.format(env.getProperty("user.not.found"), email));
+            throw new AppException(MessageFormat.format(env.getProperty("user.not.found"), email));
         }
         logger.info("update " + userToUpdate);
         BeanUtils.copyProperties(userProfile, userToUpdate);
@@ -84,7 +85,7 @@ public class UserServiceImpl implements UserService {
     public User updateUserPassword(String email, String oldPassword, String newPassword) throws Exception {
         User user = userRepository.findByEmail(email);
         if(!encoder.matches(oldPassword, user.getPassword())) {
-            throw new Exception("old password is incorrect");
+            throw new Exception(env.getProperty("user.oldPassword.incorrect"));
         }
         user.setPassword(encoder.encode(newPassword));
         return userRepository.save(user);

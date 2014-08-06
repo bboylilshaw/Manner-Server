@@ -19,20 +19,20 @@
                         <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
                     </ul>
                 </div>
-                <div th:if="${error != null}" class="alert alert-danger">
+                <div th:if="${userExistsError != null}" class="alert alert-danger">
                     <ul>
-                        <li th:text="${error}">Email already exists</li>
+                        <li th:text="${userExistsError}">Email already exists</li>
                     </ul>
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12 col-sm-6" th:classappend="${#fields.hasErrors('firstName')}?'has-error'">
                         <div class="input-group">
                             <div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div>
-                            <input type="text" name="firstName" th:field="*{firstName}" class="form-control" placeholder="First Name"/>
+                            <input type="text" name="firstName" th:field="*{firstName}" class="form-control" placeholder="First Name" required="true"/>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6" th:classappend="${#fields.hasErrors('lastName')}?'has-error'">
-                        <input type="text" name="lastName" th:field="*{lastName}" class="form-control" placeholder="Last Name"/>
+                        <input type="text" name="lastName" th:field="*{lastName}" class="form-control" placeholder="Last Name" required="true"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -44,10 +44,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-12" th:classappend="${#fields.hasErrors('email')}?'has-error'">
+                    <div class="col-xs-12" th:classappend="${#fields.hasErrors('email') || userExistsError != null}?'has-error'">
                         <div class="input-group">
                             <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
-                            <input type="email" name="email" th:field="*{email}" class="form-control" placeholder="Email Address"/>
+                            <input type="email" name="email" th:field="*{email}" class="form-control" placeholder="Email Address" required="true"/>
                         </div>
                     </div>
                 </div>

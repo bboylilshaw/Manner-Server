@@ -4,11 +4,15 @@ import org.springframework.context.annotation.*;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.*;
+import org.thymeleaf.dialect.IDialect;
 import org.thymeleaf.extras.springsecurity3.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Configuration
 @EnableWebMvc
@@ -65,9 +69,14 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Bean
     public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.setMessageSource(messageSource());
-        templateEngine.addDialect(new SpringSecurityDialect()); // add spring security dialect
+
+        Set<IDialect> dialectSet = new HashSet<>();
+        dialectSet.add(new SpringSecurityDialect());
+        templateEngine.setAdditionalDialects(dialectSet); // add spring security dialect
+
         return templateEngine;
     }
 

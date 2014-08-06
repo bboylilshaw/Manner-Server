@@ -4,22 +4,19 @@ public class AppException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    private String errMsg;
+    private String message;
 
     public AppException() {
         super();
     }
 
-    public AppException(String errMsg) {
-        super(errMsg);
+    public AppException(String message) {
+        super(message);
+        this.message = message;
     }
 
-    public String getErrMsg() {
-        return errMsg;
-    }
-
-    public void setErrMsg(String errMsg) {
-        this.errMsg = errMsg;
+    public String getMessage() {
+        return message;
     }
 
 }

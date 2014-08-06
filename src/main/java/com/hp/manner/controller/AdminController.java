@@ -30,7 +30,7 @@ public class AdminController {
 
     @RequestMapping({ "/", "/index", "/home" })
     public String renderAdminHomePage(ModelMap modelMap) {
-        logger.info("render admin home page.");
+        logger.info("rendering Admin home page - " + ADMIN_HOME_PAGE);
         modelMap.addAttribute("message", "This is Admin home Page");
         return ADMIN_HOME_PAGE;
     }
@@ -46,18 +46,19 @@ public class AdminController {
     }
 
     @RequestMapping("/users")
-    public String renderUserManagementPage(ModelMap modelMap) {
-        logger.info("render admin - user management page.");
-        modelMap.addAttribute("message", "This is User management page");
+    public String renderUserManagementPage() {
+        logger.info("rendering Admin users management page - " + ADMIN_USER_MANAGEMENT_PAGE);
         return ADMIN_USER_MANAGEMENT_PAGE;
     }
 
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
     public String addUser(@Valid @ModelAttribute("user") User user, ModelMap modelMap, BindingResult bindingResult, HttpServletRequest req) {
         logger.info("add new user.");
-        // check if there is any binding result errors first.
-        // If yes, return to same page with validation error messages.
-        // If no, then proceed.
+        /*
+        * check if there is any binding result errors first.
+        * If yes, return to same page with validation error messages.
+        * If no, then proceed.
+        */
         if (bindingResult.hasErrors()) {
             return ADMIN_USER_MANAGEMENT_PAGE;
         }
@@ -68,13 +69,11 @@ public class AdminController {
             user.setRole(User.Role.USER);
         }
 
-        //FIXME
-        //userService.addUser(user);
         try {
             userService.addUser(user);
         } catch (UserExistsException e) {
-            modelMap.addAttribute("error", e.getMessage());
-            logger.error(e.getMessage());
+            modelMap.addAttribute("userExistsError", e.getMessage());
+            logger.error(e.getStackTrace());
             return ADMIN_USER_MANAGEMENT_PAGE;
         }
         return "redirect:/admin/users";
