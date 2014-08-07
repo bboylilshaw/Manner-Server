@@ -52,7 +52,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
-    public String addUser(@Valid @ModelAttribute("user") User user, ModelMap modelMap, BindingResult bindingResult, HttpServletRequest req) {
+    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, HttpServletRequest req) {
         logger.info("add new user.");
         /*
         * check if there is any binding result errors first.
@@ -72,7 +72,7 @@ public class AdminController {
         try {
             userService.addUser(user);
         } catch (UserExistsException e) {
-            modelMap.addAttribute("userExistsError", e.getMessage());
+            bindingResult.rejectValue("email", "user.exists", new Object[]{user.getEmail()}, e.getMessage());
             logger.error(e.getStackTrace());
             return ADMIN_USER_MANAGEMENT_PAGE;
         }

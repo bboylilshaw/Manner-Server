@@ -79,18 +79,17 @@ public class MainController {
     }
 
     @RequestMapping(value = "/user/password", method = RequestMethod.POST)
-    public String changePassword(@Valid @ModelAttribute("changePasswordForm") ChangePasswordForm changePasswordForm, ModelMap modelMap, BindingResult bindingResult) {
+    public String changePassword(@Valid @ModelAttribute("changePasswordForm") ChangePasswordForm changePasswordForm, BindingResult bindingResult) {
         logger.info("update user's password.");
         if (bindingResult.hasErrors()) {
             return CHANGE_PASSWORD_PAGE;
         }
 
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        //userService.updateUserPassword(email, changePasswordForm.getOldPassword(), changePasswordForm.getNewPassword());
         try {
             userService.updateUserPassword(email, changePasswordForm.getOldPassword(), changePasswordForm.getNewPassword());
         } catch (Exception e) {
-            modelMap.addAttribute("passwordError", e.getMessage());
+            bindingResult.rejectValue("oldPassword", "oldPassword.incorrect", e.getMessage());
             logger.error(e.getStackTrace());
             return CHANGE_PASSWORD_PAGE;
         }

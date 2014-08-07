@@ -19,11 +19,6 @@
                         <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
                     </ul>
                 </div>
-                <div th:if="${userExistsError != null}" class="alert alert-danger">
-                    <ul>
-                        <li th:text="${userExistsError}">Email already exists</li>
-                    </ul>
-                </div>
                 <div class="form-group">
                     <div class="col-xs-12 col-sm-6" th:classappend="${#fields.hasErrors('firstName')}?'has-error'">
                         <div class="input-group">
@@ -44,7 +39,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-12" th:classappend="${#fields.hasErrors('email') || userExistsError != null}?'has-error'">
+                    <div class="col-xs-12" th:classappend="${#fields.hasErrors('email')}?'has-error'">
                         <div class="input-group">
                             <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
                             <input type="email" name="email" th:field="*{email}" class="form-control" placeholder="Email Address" required="true"/>
