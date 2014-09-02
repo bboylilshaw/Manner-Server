@@ -2,7 +2,11 @@ package com.hp.manner.exception;
 
 public class UserExistsException extends Exception {
 
-    private String message;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2590314424204485720L;
+	private String message;
 
     public UserExistsException() {
         super();
