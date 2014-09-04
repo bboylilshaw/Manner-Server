@@ -23,11 +23,11 @@
                     <div class="col-xs-12 col-sm-6" th:classappend="${#fields.hasErrors('firstName')}?'has-error'">
                         <div class="input-group">
                             <div class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></div>
-                            <input type="text" name="firstName" th:field="*{firstName}" class="form-control" placeholder="First Name" required/>
+                            <input type="text" name="firstName" th:field="*{firstName}" class="form-control" placeholder="First Name" required="true"/>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6" th:classappend="${#fields.hasErrors('lastName')}?'has-error'">
-                        <input type="text" name="lastName" th:field="*{lastName}" class="form-control" placeholder="Last Name" required/>
+                        <input type="text" name="lastName" th:field="*{lastName}" class="form-control" placeholder="Last Name" required="true"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -42,7 +42,7 @@
                     <div class="col-xs-12" th:classappend="${#fields.hasErrors('email')}?'has-error'">
                         <div class="input-group">
                             <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
-                            <input type="email" name="email" th:field="*{email}" class="form-control" placeholder="Email Address" required/>
+                            <input type="email" name="email" th:field="*{email}" class="form-control" placeholder="Email Address" required="true"/>
                         </div>
                     </div>
                 </div>
