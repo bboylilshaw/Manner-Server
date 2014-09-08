@@ -15,5 +15,6 @@ Manner-Server
 * Spring MVC (4.0.x)
 * Spring Security (3.2.x)
 * Spring Data Mongo DB (1.5.x)
+* Spring Data Rest (2.1.x)
 * Thymeleaf (2.1.x)
 * Bootstrap (3.1.x)

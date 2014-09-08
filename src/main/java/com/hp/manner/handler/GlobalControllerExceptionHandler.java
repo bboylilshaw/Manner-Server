@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {
 
-    public static final String ERROR_PAGE = "error.html";
+    private static final String ERROR_PAGE = "error.html";
 
     @ExceptionHandler(AppException.class)
     public ModelAndView handleCustomException(HttpServletRequest req, AppException ae) {

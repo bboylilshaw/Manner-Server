@@ -1,9 +1,11 @@
 package com.hp.manner.controller;
 
 import com.hp.manner.exception.UserExistsException;
+import com.hp.manner.model.Role;
 import com.hp.manner.model.User;
 import com.hp.manner.service.UserServiceImpl;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,10 +22,10 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final Logger logger = Logger.getLogger(getClass());
+    private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
-    public static final String ADMIN_HOME_PAGE = "admin/home.html";
-    public static final String ADMIN_USER_MANAGEMENT_PAGE = "admin/user-manage.html";
+    private static final String ADMIN_HOME_PAGE = "admin/home.html";
+    private static final String ADMIN_USER_MANAGEMENT_PAGE = "admin/user-manage.html";
 
     @Autowired
     private UserServiceImpl userService;
@@ -64,16 +66,16 @@ public class AdminController {
         }
 
         if (req.getParameter("admin-user") != null ) {
-            user.setRole(User.Role.ADMIN);
+            user.setRole(Role.ADMIN);
         } else {
-            user.setRole(User.Role.USER);
+            user.setRole(Role.USER);
         }
 
         try {
             userService.addUser(user);
         } catch (UserExistsException e) {
             bindingResult.rejectValue("email", "user.exists", new Object[]{user.getEmail()}, e.getMessage());
-            logger.error(e.getStackTrace());
+            logger.error(e.getMessage(), e.getCause());
             return ADMIN_USER_MANAGEMENT_PAGE;
         }
         return "redirect:/admin/users";

@@ -1,4 +1,4 @@
-package com.hp.manner.config;
+package com.hp.manner;
 
 import com.mongodb.MongoClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,27 +34,5 @@ public class MongodbConfig {
     public MongoTemplate mongoTemplate() throws UnknownHostException {
         return new MongoTemplate(mongoDbFactory());
     }
-
-//    @Bean
-//    public AuditorAware<AuditableUser> myAuditorProvider() {
-//        return new AuditorAwareImpl();
-//    }
-
-//    @Bean
-//    public MongoTypeMapper mongoTypeMapper() {
-//        return new DefaultMongoTypeMapper(null);
-//    }
-//
-//    @Bean
-//    public MongoMappingContext mongoMappingContext() {
-//        return new MongoMappingContext();
-//    }
-//
-//    @Bean
-//    public MappingMongoConverter mongoConverter() throws UnknownHostException {
-//        MappingMongoConverter converter = new MappingMongoConverter(mongoDbFactory(), mongoMappingContext());
-//        converter.setTypeMapper(mongoTypeMapper());
-//        return converter;
-//    }
 
 }

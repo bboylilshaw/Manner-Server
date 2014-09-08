@@ -1,29 +1,21 @@
 package com.hp.manner.service;
 
+import com.hp.manner.AbstractIntegrationTest;
+import com.hp.manner.model.Role;
 import com.hp.manner.model.User;
-import com.hp.manner.test.BaseTest;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class UserServiceImplTest extends BaseTest {
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+
+public class UserServiceImplTest extends AbstractIntegrationTest {
 
     @Autowired
-    private UserServiceImpl userService;
-
-    @Before
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @After
-    public void tearDown() throws Exception {
-
-    }
+    UserServiceImpl userService;
 
     @Test
     public void testListAllUsers() throws Exception {
@@ -35,7 +27,9 @@ public class UserServiceImplTest extends BaseTest {
     public void testGetUserByEmail() throws Exception {
         User user = userService.getUserByEmail("yao.xiao@hp.com");
         System.out.println(user);
-        Assert.assertEquals("Jason", user.getCommonName());
+        assertThat(user.getFirstName(), is("Yao"));
+        assertThat(user.getLastName(), is("Xiao"));
+        assertThat(user.getCommonName(), is("Jason"));
     }
 
     @Test
@@ -45,8 +39,9 @@ public class UserServiceImplTest extends BaseTest {
         user.setLastName("dummy");
         user.setCommonName("dummy");
         user.setEmail("dummy@dummy.com");
-        user.setRole(User.Role.USER);
-        userService.addUser(user);
+        user.setRole(Role.USER);
+        User savedUser = userService.addUser(user);
+        assertThat(userService.getUserByEmail("dummy@dummy.com"), is(savedUser));
     }
 
     @Test

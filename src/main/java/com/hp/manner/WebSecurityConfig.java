@@ -1,6 +1,6 @@
-package com.hp.manner.config;
+package com.hp.manner;
 
-import com.hp.manner.service.UserDetailsServiceImpl;
+import com.hp.manner.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String KEY = "manner";
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private UserServiceImpl userService;
 
     @Bean
     public BCryptPasswordEncoder encoder() {
@@ -27,13 +27,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public TokenBasedRememberMeServices rememberMeServices() {
-        return new TokenBasedRememberMeServices(KEY, userDetailsService);
+        return new TokenBasedRememberMeServices(KEY, userService);
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         BCryptPasswordEncoder encoder = encoder();
-        auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
+        auth.userDetailsService(userService).passwordEncoder(encoder);
     }
 
     @Override

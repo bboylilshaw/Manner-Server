@@ -30,7 +30,7 @@
                     <td th:text="${user.commonName}">Jason</td>
                     <td th:text="${user.email}">yao.xiao@hp.com</td>
                     <!-- use Spring EL to convert Enum and compare -->
-                    <td><span th:if="${user.role==T(com.hp.manner.model.User.Role).ADMIN}" class="label label-info">Admin</span></td>
+                    <td><span th:if="${user.role==T(com.hp.manner.model.Role).ADMIN}" class="label label-info">Admin</span></td>
                 </tr>
             </tbody>
         </table>

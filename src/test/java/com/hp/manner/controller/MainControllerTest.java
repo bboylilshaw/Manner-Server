@@ -1,6 +1,6 @@
 package com.hp.manner.controller;
 
-import com.hp.manner.test.BaseTest;
+import com.hp.manner.AbstractIntegrationTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +11,12 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class MainControllerTest extends BaseTest {
+public class MainControllerTest extends AbstractIntegrationTest {
 
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
 
     @Autowired
-    private WebApplicationContext wac;
+    WebApplicationContext wac;
 
     @Before
     public void setUp() throws Exception {

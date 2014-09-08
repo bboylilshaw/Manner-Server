@@ -1,24 +1,18 @@
 package com.hp.manner.repository;
 
+import com.hp.manner.AbstractIntegrationTest;
 import com.hp.manner.model.Item;
-import com.hp.manner.test.BaseTest;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class ItemRepositoryTest extends BaseTest {
+public class ItemRepositoryTest extends AbstractIntegrationTest {
 
     @Autowired
-    private ItemRepository itemRepository;
+    ItemRepository itemRepository;
     @Autowired
-    private UserRepository userRepository;
-
-    @Before
-    public void setUp() throws Exception {
-
-    }
+    UserRepository userRepository;
 
     @Test
     public void testFindByOwner() throws Exception {

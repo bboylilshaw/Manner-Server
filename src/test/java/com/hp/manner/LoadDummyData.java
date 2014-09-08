@@ -1,10 +1,8 @@
-package com.hp.manner.test;
+package com.hp.manner;
 
-import com.hp.manner.model.Item;
-import com.hp.manner.model.User;
+import com.hp.manner.model.*;
 import com.hp.manner.repository.ItemRepository;
 import com.hp.manner.repository.UserRepository;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -14,27 +12,23 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoadDummyData extends BaseTest{
+public class LoadDummyData extends AbstractIntegrationTest{
 
     @Autowired
-    private ItemRepository itemRepository;
+    ItemRepository itemRepository;
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
     @Autowired
-    private BCryptPasswordEncoder encoder;
+    BCryptPasswordEncoder encoder;
     @Autowired
-    private MongoTemplate mongoTemplate;
-
-    @Before
-    public void setUp() throws Exception{
-        super.setUp();
-        System.out.println("Drop all collections.");
-        mongoTemplate.dropCollection(User.class);
-        mongoTemplate.dropCollection(Item.class);
-    }
+    MongoTemplate mongoTemplate;
 
     @Test
     public void loadDummyData() throws Exception {
+        System.out.println("Drop all collections.");
+        mongoTemplate.dropCollection(User.class);
+        mongoTemplate.dropCollection(Item.class);
+
         System.out.println("Load dummy users data.");
         User user1 = new User();
         user1.setFirstName("Yao");
@@ -42,7 +36,7 @@ public class LoadDummyData extends BaseTest{
         user1.setEmail("yao.xiao@hp.com");
         user1.setCommonName("Jason");
         user1.setPassword(encoder.encode("123456"));
-        user1.setRole(User.Role.ADMIN);
+        user1.setRole(Role.ADMIN);
 
         Map<String, String> groups1 = new HashMap<>();
         groups1.put("BMI", "Lead");
@@ -55,7 +49,7 @@ public class LoadDummyData extends BaseTest{
         user2.setEmail("john.smith@example.com");
         user2.setCommonName("John");
         user2.setPassword(encoder.encode("123456"));
-        user2.setRole(User.Role.USER);
+        user2.setRole(Role.USER);
 
         Map<String, String> groups2 = new HashMap<>();
         groups2.put("BMI", "Member");
@@ -69,17 +63,17 @@ public class LoadDummyData extends BaseTest{
 
         Item item1 = new Item();
         item1.setContent("Learn Spring Data Mongodb");
-        item1.setPriority(Item.Priority.HIGH);
+        item1.setPriority(Priority.HIGH);
         item1.setDueDate(new Date());// or new Date(1404172800000L) 2014-07-01 00:00:00
-        item1.setStatus(Item.Status.NEW);
+        item1.setStatus(Status.NEW);
         item1.setPercentage(0);
         item1.setOwner(user);
 
         Item item2 = new Item();
         item2.setContent("Learn Spring Security");
-        item2.setPriority(Item.Priority.MEDIUM);
+        item2.setPriority(Priority.MEDIUM);
         item2.setDueDate(new Date()); // or new Date(1404172800000L) 2014-07-01 00:00:00
-        item2.setStatus(Item.Status.WORK_IN_PROGRESS);
+        item2.setStatus(Status.WORK_IN_PROGRESS);
         item2.setPercentage(50);
         item2.setOwner(user);
 

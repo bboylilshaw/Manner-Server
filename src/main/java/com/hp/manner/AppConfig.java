@@ -1,17 +1,17 @@
-package com.hp.manner.config;
+package com.hp.manner;
 
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RestController;
 
 @Configuration
-@Import({ MongodbConfig.class })
+@EnableAspectJAutoProxy(proxyTargetClass = true)
+@Import({ WebSecurityConfig.class, MongodbConfig.class })
 @ComponentScan(
     basePackages = "com.hp.manner",
     excludeFilters = @ComponentScan.Filter(
-        value = { Repository.class, Controller.class, RestController.class },
+        value = { Configuration.class, Controller.class, RestController.class },
         type = FilterType.ANNOTATION
     )
 )

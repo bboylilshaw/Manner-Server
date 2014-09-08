@@ -2,19 +2,26 @@ package com.hp.manner.service;
 
 import com.hp.manner.exception.AppException;
 import com.hp.manner.exception.UserExistsException;
+import com.hp.manner.model.Role;
 import com.hp.manner.model.User;
 import com.hp.manner.model.UserProfile;
 import com.hp.manner.repository.UserRepository;
-import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +29,8 @@ import java.util.UUID;
 @PropertySource("classpath:exception.properties")
 public class UserServiceImpl implements UserService {
 
-    private final Logger logger = Logger.getLogger(getClass());
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired
     private Environment env;
     @Autowired
@@ -38,13 +46,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(ObjectId id) {
-        logger.info("get user by ObjectId: " + id.toString());
+        logger.info("get user by ObjectId: {}", id.toString());
         return userRepository.findOne(id);
     }
 
     @Override
     public User getUserByEmail(String email) {
-        logger.info("get user by Email: " + email);
+        logger.info("get user by Email: {}", email);
         return userRepository.findByEmail(email);
     }
 
@@ -55,10 +63,10 @@ public class UserServiceImpl implements UserService {
         }
         if (user.getPassword() == null) {
             String tempPassword = UUID.randomUUID().toString().substring(0,8);
-            logger.info("temp password is: " + tempPassword);
+            logger.info("temp password is: {}", tempPassword);
             user.setPassword(encoder.encode(tempPassword));
         }
-        logger.info("add " + user);
+        logger.info("add {}", user);
         return userRepository.save(user);
     }
 
@@ -74,10 +82,10 @@ public class UserServiceImpl implements UserService {
         if (userToUpdate == null) {
             throw new AppException(MessageFormat.format(env.getProperty("user.not.found"), email));
         }
-        logger.info("update " + userToUpdate);
+        logger.info("update {}", userToUpdate);
         BeanUtils.copyProperties(userProfile, userToUpdate);
-        logger.info(userToUpdate);
-        logger.info("updated to " + userToUpdate);
+        logger.info(userToUpdate.toString());
+        logger.info("updated to {}", userToUpdate);
         return userRepository.save(userToUpdate);
     }
 
@@ -96,8 +104,45 @@ public class UserServiceImpl implements UserService {
         if (!userRepository.exists(id)) {
             throw new Exception(env.getProperty("user.not.exist"));
         }
-        logger.info("delete user by ObjectId:" + id.toString());
+        logger.info("delete user by ObjectId: {}", id.toString());
         userRepository.delete(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
+        if(user == null) {
+            throw new UsernameNotFoundException(MessageFormat.format(env.getProperty("user.not.found"), email));
+        }
+
+        final boolean enabled = true;
+        final boolean accountNonExpired = true;
+        final boolean credentialsNonExpired = true;
+        final boolean accountNonLocked = true;
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
+                user.getPassword(),
+                enabled,
+                accountNonExpired,
+                credentialsNonExpired,
+                accountNonLocked,
+                getAuthorities(user.getRole()));
+    }
+
+    private List<GrantedAuthority> getAuthorities(Role role) {
+        List<GrantedAuthority> authList = new ArrayList<>();
+        if (role.equals(Role.SUPER_ADMIN)) {
+            authList.add(new SimpleGrantedAuthority("ROLE_SUPER_ADMIN"));
+            authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+        } else if (role.equals(Role.ADMIN)) {
+            authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+        } else if (role.equals(Role.USER)) {
+            authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+        }
+        return authList;
     }
 
 }

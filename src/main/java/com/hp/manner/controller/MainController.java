@@ -4,7 +4,8 @@ import com.hp.manner.model.ChangePasswordForm;
 import com.hp.manner.model.UserProfile;
 import com.hp.manner.service.UserServiceImpl;
 import com.hp.manner.validator.PasswordValidator;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,11 +24,11 @@ import javax.validation.Valid;
 @Controller
 public class MainController {
 
-    private final Logger logger = Logger.getLogger(getClass());
+    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
-    public static final String HOME_PAGE = "home.html";
-    public static final String USER_PROFILE_PAGE = "user-profile.html";
-    public static final String CHANGE_PASSWORD_PAGE = "change-password.html";
+    private static final String HOME_PAGE = "home.html";
+    private static final String USER_PROFILE_PAGE = "user-profile.html";
+    private static final String CHANGE_PASSWORD_PAGE = "change-password.html";
 
     @Autowired
     private UserServiceImpl userService;
@@ -90,7 +91,7 @@ public class MainController {
             userService.updateUserPassword(email, changePasswordForm.getOldPassword(), changePasswordForm.getNewPassword());
         } catch (Exception e) {
             bindingResult.rejectValue("oldPassword", "oldPassword.incorrect", e.getMessage());
-            logger.error(e.getStackTrace());
+            logger.error(e.getMessage(), e.getCause());
             return CHANGE_PASSWORD_PAGE;
         }
         return "redirect:/home";

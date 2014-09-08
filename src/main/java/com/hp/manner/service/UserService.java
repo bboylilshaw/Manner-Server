@@ -3,10 +3,11 @@ package com.hp.manner.service;
 import com.hp.manner.model.User;
 import com.hp.manner.model.UserProfile;
 import org.bson.types.ObjectId;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     public List<User> listAllUsers();
 
