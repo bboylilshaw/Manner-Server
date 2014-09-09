@@ -1,26 +1,40 @@
 package com.hp.manner.validator;
 
-import com.hp.manner.model.ChangePasswordForm;
+import com.hp.manner.model.UserPasswordForm;
+import com.hp.manner.service.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+@Component
 public class PasswordValidator implements Validator {
+
+    @Autowired
+    private UserServiceImpl userService;
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return ChangePasswordForm.class.equals(clazz);
+        return UserPasswordForm.class.equals(clazz);
     }
 
     @Override
     public void validate(Object obj, Errors errors) {
 
-        ChangePasswordForm changePasswordForm = (ChangePasswordForm) obj;
+        UserPasswordForm userPasswordForm = (UserPasswordForm) obj;
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        boolean oldPasswordCorrect = userService.validatePassword(email, userPasswordForm.getOldPassword());
 
-        if (!changePasswordForm.getConfirmPassword().equals(changePasswordForm.getNewPassword())) {
+        if(!oldPasswordCorrect) {
+            errors.rejectValue("oldPassword", "oldPassword.incorrect");
+        }
+
+        if (!userPasswordForm.getConfirmPassword().equals(userPasswordForm.getNewPassword())) {
             errors.rejectValue("confirmPassword", "confirmPassword.not.match");
         }
 
-        if (changePasswordForm.getNewPassword().equals(changePasswordForm.getOldPassword())) {
+        if (userPasswordForm.getNewPassword().equals(userPasswordForm.getOldPassword())) {
             errors.rejectValue("newPassword", "newPassword.not.same");
         }
 

@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-public class UserProfile {
+public class UserProfileForm {
 
     @NotEmpty
     @Size(max = 30)

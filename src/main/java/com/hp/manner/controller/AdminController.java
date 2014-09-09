@@ -49,13 +49,13 @@ public class AdminController {
 
     @RequestMapping("/users")
     public String renderUserManagementPage() {
-        logger.info("rendering Admin users management page - " + ADMIN_USER_MANAGEMENT_PAGE);
+        logger.info("rendering Admin user management page - " + ADMIN_USER_MANAGEMENT_PAGE);
         return ADMIN_USER_MANAGEMENT_PAGE;
     }
 
-    @RequestMapping(value = "/user/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
     public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, HttpServletRequest req) {
-        logger.info("add new user.");
+        logger.info("add new user");
         /*
         * check if there is any binding result errors first.
         * If yes, return to same page with validation error messages.
@@ -65,7 +65,7 @@ public class AdminController {
             return ADMIN_USER_MANAGEMENT_PAGE;
         }
 
-        if (req.getParameter("admin-user") != null ) {
+        if (req.getParameter("isAdmin") != null ) {
             user.setRole(Role.ADMIN);
         } else {
             user.setRole(Role.USER);
@@ -75,7 +75,6 @@ public class AdminController {
             userService.addUser(user);
         } catch (UserExistsException e) {
             bindingResult.rejectValue("email", "user.exists", new Object[]{user.getEmail()}, e.getMessage());
-            logger.error(e.getMessage(), e.getCause());
             return ADMIN_USER_MANAGEMENT_PAGE;
         }
         return "redirect:/admin/users";

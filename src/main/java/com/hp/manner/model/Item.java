@@ -1,8 +1,6 @@
 package com.hp.manner.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.hp.manner.common.DateSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -33,7 +31,6 @@ public class Item extends BaseEntity {
     private User createdBy;
 
     @CreatedDate
-    @JsonSerialize(using = DateSerializer.class)
     private Date createdDate;
 
     @LastModifiedBy
@@ -41,7 +38,6 @@ public class Item extends BaseEntity {
     private User lastModifiedBy;
 
     @LastModifiedDate
-    @JsonSerialize(using = DateSerializer.class)
     private Date lastModifiedDate;
 
     private Status status;
@@ -49,10 +45,8 @@ public class Item extends BaseEntity {
     @Min(0) @Max(100)
     private int percentage;
 
-    @JsonSerialize(using = DateSerializer.class)
     private Date dueDate;
 
-    @JsonSerialize(using = DateSerializer.class)
     private Date deferDate;
 
     private Priority priority;

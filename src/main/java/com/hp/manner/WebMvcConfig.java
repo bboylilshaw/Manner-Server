@@ -1,5 +1,7 @@
 package com.hp.manner;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -60,6 +62,12 @@ public class WebMvcConfig extends RepositoryRestMvcConfiguration {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void configureJacksonObjectMapper(ObjectMapper objectMapper) {
+        // date format
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
     }
 
     @Bean

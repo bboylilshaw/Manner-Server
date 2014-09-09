@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Getter
 @Setter
-public class ChangePasswordForm {
+public class UserPasswordForm {
 
     @NotEmpty
     private String oldPassword;

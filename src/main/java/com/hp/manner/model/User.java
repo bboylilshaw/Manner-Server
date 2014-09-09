@@ -1,10 +1,9 @@
 package com.hp.manner.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.hp.manner.common.DateSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.CreatedDate;
@@ -19,6 +18,7 @@ import java.util.Map;
 
 @Document
 @Data
+@ToString(exclude = "password")
 @EqualsAndHashCode(callSuper = false)
 public class User extends BaseEntity {
 
@@ -40,11 +40,9 @@ public class User extends BaseEntity {
     private String email;
 
     @CreatedDate
-    @JsonSerialize(using = DateSerializer.class)
     private Date createdDate;
 
     @LastModifiedDate
-    @JsonSerialize(using = DateSerializer.class)
     private Date lastModifiedDate;
 
     @JsonIgnore

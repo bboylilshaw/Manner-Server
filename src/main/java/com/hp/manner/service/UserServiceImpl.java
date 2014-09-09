@@ -4,7 +4,8 @@ import com.hp.manner.exception.AppException;
 import com.hp.manner.exception.UserExistsException;
 import com.hp.manner.model.Role;
 import com.hp.manner.model.User;
-import com.hp.manner.model.UserProfile;
+import com.hp.manner.model.UserPasswordForm;
+import com.hp.manner.model.UserProfileForm;
 import com.hp.manner.repository.UserRepository;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -52,7 +54,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByEmail(String email) {
-        logger.info("get user by Email: {}", email);
+        logger.info("get user by Email: " + email);
         return userRepository.findByEmail(email);
     }
 
@@ -63,10 +65,10 @@ public class UserServiceImpl implements UserService {
         }
         if (user.getPassword() == null) {
             String tempPassword = UUID.randomUUID().toString().substring(0,8);
-            logger.info("temp password is: {}", tempPassword);
+            logger.info("temp password is: " + tempPassword);
             user.setPassword(encoder.encode(tempPassword));
         }
-        logger.info("add {}", user);
+        logger.info("add new user: " + user);
         return userRepository.save(user);
     }
 
@@ -77,34 +79,45 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserProfile(String email, UserProfile userProfile) throws AppException {
+    public User updateUserProfile(UserProfileForm userProfileForm) throws AppException {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User userToUpdate = userRepository.findByEmail(email);
         if (userToUpdate == null) {
             throw new AppException(MessageFormat.format(env.getProperty("user.not.found"), email));
         }
-        logger.info("update {}", userToUpdate);
-        BeanUtils.copyProperties(userProfile, userToUpdate);
-        logger.info(userToUpdate.toString());
-        logger.info("updated to {}", userToUpdate);
+        logger.info("original user is: " + userToUpdate);
+        BeanUtils.copyProperties(userProfileForm, userToUpdate);
+        logger.info("updated to " + userToUpdate);
         return userRepository.save(userToUpdate);
     }
 
     @Override
-    public User updateUserPassword(String email, String oldPassword, String newPassword) throws Exception {
+    public User updateUserPassword(UserPasswordForm userPasswordForm) throws AppException{
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(email);
-        if(!encoder.matches(oldPassword, user.getPassword())) {
-            throw new Exception(env.getProperty("user.oldPassword.incorrect"));
+        if (user == null) {
+            throw new AppException(MessageFormat.format(env.getProperty("user.not.found"), email));
         }
-        user.setPassword(encoder.encode(newPassword));
+        user.setPassword(encoder.encode(userPasswordForm.getNewPassword()));
+        logger.info("update user password");
         return userRepository.save(user);
+    }
+
+    @Override
+    public boolean validatePassword(String email, String rawPassword) throws AppException{
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new AppException(MessageFormat.format(env.getProperty("user.not.found"), email));
+        }
+        return encoder.matches(rawPassword, user.getPassword());
     }
 
     @Override
     public void deleteUser(ObjectId id) throws Exception {
         if (!userRepository.exists(id)) {
-            throw new Exception(env.getProperty("user.not.exist"));
+            throw new AppException(env.getProperty("user.not.found"));
         }
-        logger.info("delete user by ObjectId: {}", id.toString());
+        logger.info("delete user by ObjectId: " + id.toString());
         userRepository.delete(id);
     }
 
