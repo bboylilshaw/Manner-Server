@@ -298,7 +298,7 @@
                 <configuration>
                     <path>/${project.build.finalName}</path>
                     <update>true</update>
-                    <url>http://localhost:8080/manager/text</url>
+                    <url>http://c0048360.itcs.hp.com/:8080/manager/text</url>
                     <username>admin</username>
                     <password>password</password>
                 </configuration>
