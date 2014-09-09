@@ -14,15 +14,18 @@ public class PasswordValidator implements Validator {
     @Autowired
     private UserServiceImpl userService;
 
+    /*
+     * This Validator validates just UserPasswordForm instances
+     */
     @Override
-    public boolean supports(Class<?> clazz) {
+    public boolean supports(Class clazz) {
         return UserPasswordForm.class.equals(clazz);
     }
 
     @Override
-    public void validate(Object obj, Errors errors) {
+    public void validate(Object target, Errors errors) {
 
-        UserPasswordForm userPasswordForm = (UserPasswordForm) obj;
+        UserPasswordForm userPasswordForm = (UserPasswordForm) target;
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         boolean oldPasswordCorrect = userService.validatePassword(email, userPasswordForm.getOldPassword());
 

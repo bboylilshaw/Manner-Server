@@ -35,10 +35,12 @@
                     </ul>
 
                     <ul class="nav navbar-nav pull-right">
-                        <li><a href="#" th:text="${#authentication.name}">Username<span class="navbar-new">2</span></a></li>
+                        <!--<li><a href="#" th:text="${#authentication.name}">Username<span class="navbar-new">2</span></a></li>-->
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Settings <b class="caret"></b>
+                                <span th:text="${#authentication.name}">Username</span>
+                                <!--<span class="navbar-new">2</span>-->
+                                <b class="caret"></b>
                             </a>
                             <span class="dropdown-arrow hidden-xs"></span>
                             <ul class="dropdown-menu">

@@ -1,7 +1,6 @@
 package com.hp.manner.service;
 
 import com.hp.manner.exception.AppException;
-import com.hp.manner.exception.UserExistsException;
 import com.hp.manner.model.Role;
 import com.hp.manner.model.User;
 import com.hp.manner.model.UserPasswordForm;
@@ -59,9 +58,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addUser(User user) throws UserExistsException {
+    public User addUser(User user) throws AppException {
         if (userRepository.findByEmail(user.getEmail()) != null) {
-            throw new UserExistsException(MessageFormat.format(env.getProperty("user.exists"), user.getEmail()));
+            throw new AppException(MessageFormat.format(env.getProperty("user.exists"), user.getEmail()));
         }
         if (user.getPassword() == null) {
             String tempPassword = UUID.randomUUID().toString().substring(0,8);

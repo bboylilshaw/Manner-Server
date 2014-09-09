@@ -31,13 +31,15 @@ public class MainController {
 
     @Autowired
     private UserServiceImpl userService;
+    @Autowired
+    private PasswordValidator passwordValidator;
 
     @InitBinder
     private void initBinder(WebDataBinder binder) {
-        if (binder.getTarget().getClass().equals(UserPasswordForm.class)) {
+        if (binder.getTarget() != null && binder.getTarget().getClass().equals(UserPasswordForm.class)) {
             logger.debug("binding to " + binder.getObjectName());
             logger.info("adding custom password validator");
-            binder.addValidators(new PasswordValidator());
+            binder.addValidators(passwordValidator);
         }
     }
 
@@ -61,10 +63,10 @@ public class MainController {
 
     @RequestMapping(value = "/user/profile", method = RequestMethod.PUT)
     public String updateUserProfile(@Valid @ModelAttribute("userProfileForm") UserProfileForm userProfileForm, BindingResult bindingResult) {
-        logger.info("update user profile");
         if (bindingResult.hasErrors()) {
             return USER_PROFILE_PAGE;
         }
+        logger.info("update user profile");
         userService.updateUserProfile(userProfileForm);
         return "redirect:/";
     }
@@ -78,10 +80,10 @@ public class MainController {
 
     @RequestMapping(value = "/user/password", method = RequestMethod.POST)
     public String updatePassword(@Valid @ModelAttribute("userPasswordForm") UserPasswordForm userPasswordForm, BindingResult bindingResult) {
-        logger.info("update user password");
         if (bindingResult.hasErrors()) {
             return USER_PASSWORD_PAGE;
         }
+        logger.info("update user password");
         userService.updateUserPassword(userPasswordForm);
         return "redirect:/";
     }

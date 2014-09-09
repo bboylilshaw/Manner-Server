@@ -7,9 +7,13 @@
     <header th:replace="fragments/header-navbar.html :: navbar-top">Header Navbar</header>
     <!--begin container-->
     <div class="container">
+        <div th:if="${message != null}" class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <p th:text="${message}"></p>
+        </div>
         <div class="row">
             <div class="col-sm-12 col-md-8 col-lg-6" th:include="admin/add-user.html :: add-user">Add User Fragment</div>
-            <div class="col-sm-12 col-md-10 col-lg-8" th:include="admin/users.html :: users-list">User List Fragment</div>
+            <div class="col-sm-12 col-md-10 col-lg-8" th:include="admin/user-list.html :: user-list">User List Fragment</div>
         </div>
     </div><!--end container-->
 

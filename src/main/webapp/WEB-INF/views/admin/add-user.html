@@ -11,7 +11,7 @@
 <body>
 
     <div th:fragment="add-user">
-        <form action="#" th:action="@{/admin/user/add}" th:object="${user}" method="post" class="form-horizontal" role="form">
+        <form action="#" th:action="@{/admin/user}" th:object="${user}" method="post" class="form-horizontal" role="form">
             <fieldset>
                 <legend class="h3">Add New User</legend>
                 <div th:if="${#fields.hasErrors('*')}" id="errMsg" class="alert alert-danger">
