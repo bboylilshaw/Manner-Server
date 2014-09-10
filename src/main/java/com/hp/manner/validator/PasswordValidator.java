@@ -18,7 +18,7 @@ public class PasswordValidator implements Validator {
      * This Validator validates just UserPasswordForm instances
      */
     @Override
-    public boolean supports(Class clazz) {
+    public boolean supports(Class<?> clazz) {
         return UserPasswordForm.class.equals(clazz);
     }
 
