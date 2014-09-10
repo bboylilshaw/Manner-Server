@@ -6,14 +6,10 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Size;
-import java.util.Date;
 import java.util.Map;
 
 @Document
@@ -39,21 +35,11 @@ public class User extends BaseEntity {
     @Indexed(unique = true)
     private String email;
 
-    @CreatedDate
-    private Date createdDate;
-
-    @LastModifiedDate
-    private Date lastModifiedDate;
-
     @JsonIgnore
     private String password;
 
     private Map<String, String> groups;
 
     private Role role;
-
-    @JsonIgnore
-    @Version
-    private Long version;
 
 }

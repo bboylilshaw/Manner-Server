@@ -1,10 +1,8 @@
 package com.hp.manner.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -25,20 +23,6 @@ public class Item extends BaseEntity {
 
     @DBRef
     private User owner;
-
-    @CreatedBy
-    @DBRef
-    private User createdBy;
-
-    @CreatedDate
-    private Date createdDate;
-
-    @LastModifiedBy
-    @DBRef
-    private User lastModifiedBy;
-
-    @LastModifiedDate
-    private Date lastModifiedDate;
 
     private Status status;
 
@@ -61,9 +45,5 @@ public class Item extends BaseEntity {
     private Set<String> tag;
 
     private String group;
-
-    @JsonIgnore
-    @Version
-    private Long version;
 
 }
