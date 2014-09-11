@@ -16,22 +16,22 @@ import java.util.Map;
 @Data
 @ToString(exclude = "password")
 @EqualsAndHashCode(callSuper = false)
-public class User extends BaseEntity {
+public class User extends AuditableBaseEntity {
 
     @NotEmpty
-    @Size(max = 30)
+    @Size(max = 50)
     private String firstName;
 
     @NotEmpty
-    @Size(max = 30)
+    @Size(max = 50)
     private String lastName;
 
-    @Size(max = 30)
+    @Size(max = 50)
     private String commonName;
 
     @NotEmpty
     @Email
-    @Size(max = 50)
+    @Size(max = 100)
     @Indexed(unique = true)
     private String email;
 

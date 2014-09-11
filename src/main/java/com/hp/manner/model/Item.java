@@ -14,7 +14,7 @@ import java.util.Set;
 @Document
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Item extends BaseEntity {
+public class Item extends AuditableBaseEntity {
 
     private String subject;
 

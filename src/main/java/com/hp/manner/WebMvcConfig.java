@@ -66,9 +66,13 @@ public class WebMvcConfig extends RepositoryRestMvcConfiguration {
 
     @Override
     protected void configureJacksonObjectMapper(ObjectMapper objectMapper) {
-        // date format
+        //Date Format: default use ISO8601
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
     }
+
+//    @Override
+//    protected void configureValidatingRepositoryEventListener(ValidatingRepositoryEventListener validatingListener) {
+//    }
 
     @Bean
     public TemplateResolver templateResolver() {
