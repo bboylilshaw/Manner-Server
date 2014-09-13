@@ -1,11 +1,12 @@
 package com.hp.manner;
 
-import com.hp.manner.common.EmailAuditor;
+import com.hp.manner.common.SpringSecurityAuditorAware;
 import com.mongodb.MongoClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -40,8 +41,8 @@ public class MongodbConfig {
     }
 
     @Bean
-    public EmailAuditor emailAuditor() {
-        return new EmailAuditor();
+    public AuditorAware<String> auditorAware() {
+        return new SpringSecurityAuditorAware();
     }
 
 }

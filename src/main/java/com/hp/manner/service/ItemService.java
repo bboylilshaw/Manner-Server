@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface ItemService {
 
-    public List<Item> listItemsByOwner(String userId);
+    List<Item> listItemsByOwner(String userId);
 
-    public List<Item> listAllItems();
+    List<Item> listAllItems();
 
-    public Item getItem(String id);
+    Item getItem(String id);
 
 }

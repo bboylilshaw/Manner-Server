@@ -1,6 +1,6 @@
 package com.hp.manner;
 
-import com.hp.manner.service.UserServiceImpl;
+import com.hp.manner.security.UserRepositoryUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String KEY = "manner";
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserRepositoryUserDetailsService userDetailsService;
 
     @Bean
     public BCryptPasswordEncoder encoder() {
@@ -27,13 +27,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public TokenBasedRememberMeServices rememberMeServices() {
-        return new TokenBasedRememberMeServices(KEY, userService);
+        return new TokenBasedRememberMeServices(KEY, userDetailsService);
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        BCryptPasswordEncoder encoder = encoder();
-        auth.userDetailsService(userService).passwordEncoder(encoder);
+        auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
     }
 
     @Override
@@ -43,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .headers().disable()
             .authorizeRequests()
                 .antMatchers("/resources/**", "/signup", "/api/**").permitAll() //FIXME: add authentication for restful web service api call
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
             .formLogin()

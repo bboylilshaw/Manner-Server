@@ -9,7 +9,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Component
-public class PasswordValidator implements Validator {
+public class UserPasswordFormValidator implements Validator {
 
     @Autowired
     private UserServiceImpl userService;

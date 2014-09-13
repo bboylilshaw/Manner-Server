@@ -1,7 +1,6 @@
 package com.hp.manner.service;
 
 import com.hp.manner.exception.AppException;
-import com.hp.manner.model.Role;
 import com.hp.manner.model.User;
 import com.hp.manner.model.UserPasswordForm;
 import com.hp.manner.model.UserProfileForm;
@@ -13,16 +12,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(ObjectId id) {
-        logger.info("get user by ObjectId: {}", id.toString());
+        logger.info("get user by id: " + id.toString());
         return userRepository.findOne(id);
     }
 
@@ -73,7 +67,7 @@ public class UserServiceImpl implements UserService {
 
     //TODO: Implement updateUser function
     @Override
-    public User updateUser(User user) throws Exception {
+    public User updateUser(User user) {
         return null;
     }
 
@@ -112,49 +106,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(ObjectId id) throws Exception {
+    public void deleteUser(ObjectId id) throws AppException {
         if (!userRepository.exists(id)) {
             throw new AppException(env.getProperty("user.not.found"));
         }
         logger.info("delete user by ObjectId: " + id.toString());
         userRepository.delete(id);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
-        if(user == null) {
-            throw new UsernameNotFoundException(MessageFormat.format(env.getProperty("user.not.found"), email));
-        }
-
-        final boolean enabled = true;
-        final boolean accountNonExpired = true;
-        final boolean credentialsNonExpired = true;
-        final boolean accountNonLocked = true;
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                enabled,
-                accountNonExpired,
-                credentialsNonExpired,
-                accountNonLocked,
-                getAuthorities(user.getRole()));
-    }
-
-    private List<GrantedAuthority> getAuthorities(Role role) {
-        List<GrantedAuthority> authList = new ArrayList<>();
-        if (role.equals(Role.SUPER_ADMIN)) {
-            authList.add(new SimpleGrantedAuthority("ROLE_SUPER_ADMIN"));
-            authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-            authList.add(new SimpleGrantedAuthority("ROLE_USER"));
-        } else if (role.equals(Role.ADMIN)) {
-            authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-            authList.add(new SimpleGrantedAuthority("ROLE_USER"));
-        } else if (role.equals(Role.USER)) {
-            authList.add(new SimpleGrantedAuthority("ROLE_USER"));
-        }
-        return authList;
     }
 
 }

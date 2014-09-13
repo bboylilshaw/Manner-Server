@@ -19,4 +19,10 @@ public class ItemRepositoryTest extends AbstractIntegrationTest {
         List<Item> items = itemRepository.findByOwner(userRepository.findByEmail("yao.xiao@hp.com"));
         items.forEach(e -> System.out.println(e.getContent()));
     }
+
+    @Test
+    public void testUpdateOwner() throws Exception {
+        userRepository.findByEmail("john@jsmith.com");
+    }
+
 }

@@ -17,4 +17,10 @@ public class UserRepositoryTest extends AbstractIntegrationTest {
         assertThat(userRepository.findByEmail("yao.xiao@hp.com").getFirstName(), is("Yao"));
         assertThat(userRepository.findByEmail("yao.xiao@hp.com").getLastName(), is("Xiao"));
     }
+
+    @Test
+    public void testDeleteAll() throws Exception {
+        userRepository.deleteAll();
+        assertThat(userRepository.count(), is(0L));
+    }
 }

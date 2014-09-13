@@ -3,7 +3,7 @@ package com.hp.manner.controller;
 import com.hp.manner.model.UserPasswordForm;
 import com.hp.manner.model.UserProfileForm;
 import com.hp.manner.service.UserServiceImpl;
-import com.hp.manner.validator.PasswordValidator;
+import com.hp.manner.validator.UserPasswordFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -32,14 +32,14 @@ public class MainController {
     @Autowired
     private UserServiceImpl userService;
     @Autowired
-    private PasswordValidator passwordValidator;
+    private UserPasswordFormValidator userPasswordFormValidator;
 
     @InitBinder
     private void initBinder(WebDataBinder binder) {
         if (binder.getTarget() != null && binder.getTarget().getClass().equals(UserPasswordForm.class)) {
             logger.debug("binding to " + binder.getObjectName());
             logger.info("adding custom password validator");
-            binder.addValidators(passwordValidator);
+            binder.addValidators(userPasswordFormValidator);
         }
     }
 

@@ -3,6 +3,7 @@ package com.hp.manner.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -15,6 +16,7 @@ import java.util.Map;
 @Document
 @Data
 @ToString(exclude = "password")
+@RequiredArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class User extends AuditableBaseEntity {
 
@@ -41,5 +43,14 @@ public class User extends AuditableBaseEntity {
     private Map<String, String> groups;
 
     private Role role;
+
+    public User(String firstName, String lastName, String commonName, String email, String password, Role role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.commonName = commonName;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
 
 }

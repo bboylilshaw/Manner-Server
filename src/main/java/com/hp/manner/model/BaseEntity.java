@@ -15,8 +15,4 @@ public abstract class BaseEntity {
     @JsonSerialize(using = ObjectIdJsonSerializer.class)
     protected ObjectId id;
 
-    public boolean isNew() {
-        return this.id == null;
-    }
-
 }

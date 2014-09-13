@@ -1,32 +1,30 @@
 package com.hp.manner.service;
 
-import com.hp.manner.exception.AppException;
 import com.hp.manner.model.User;
 import com.hp.manner.model.UserPasswordForm;
 import com.hp.manner.model.UserProfileForm;
 import org.bson.types.ObjectId;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService extends UserDetailsService {
+public interface UserService  {
 
-    public List<User> listAllUsers();
+    List<User> listAllUsers();
 
-    public User getUser(ObjectId id);
+    User getUser(ObjectId id);
 
-    public User getUserByEmail(String email);
+    User getUserByEmail(String email);
 
-    public User addUser(User user) throws Exception;
+    User addUser(User user);
 
-    public User updateUser(User user) throws Exception;
+    User updateUser(User user);
 
-    public User updateUserProfile(UserProfileForm userProfileForm) throws AppException;
+    User updateUserProfile(UserProfileForm userProfileForm);
 
-    public User updateUserPassword(UserPasswordForm userPasswordForm) throws AppException;
+    User updateUserPassword(UserPasswordForm userPasswordForm);
 
-    public boolean validatePassword(String email, String rawPassword) throws AppException;
+    boolean validatePassword(String email, String rawPassword);
 
-    public void deleteUser(ObjectId id) throws Exception;
+    void deleteUser(ObjectId id);
 
 }

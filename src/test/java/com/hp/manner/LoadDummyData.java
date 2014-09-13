@@ -30,26 +30,14 @@ public class LoadDummyData extends AbstractIntegrationTest{
         mongoTemplate.dropCollection(Item.class);
 
         System.out.println("Load dummy users data.");
-        User user1 = new User();
-        user1.setFirstName("Yao");
-        user1.setLastName("Xiao");
-        user1.setEmail("yao.xiao@hp.com");
-        user1.setCommonName("Jason");
-        user1.setPassword(encoder.encode("123456"));
-        user1.setRole(Role.ADMIN);
+        User user1 = new User("Yao", "Xiao", "Jason Shaw", "yao.xiao@hp.com", encoder.encode("123456"), Role.ADMIN);
 
         Map<String, String> groups1 = new HashMap<>();
         groups1.put("BMI", "Lead");
         groups1.put("Watson", "Member");
         user1.setGroups(groups1);
 
-        User user2 = new User();
-        user2.setFirstName("John");
-        user2.setLastName("Smith");
-        user2.setEmail("john.smith@example.com");
-        user2.setCommonName("John");
-        user2.setPassword(encoder.encode("123456"));
-        user2.setRole(Role.USER);
+        User user2 = new User("John", "Smith", "John Smith", "john@jsmith.com", encoder.encode("123456"), Role.USER);
 
         Map<String, String> groups2 = new HashMap<>();
         groups2.put("BMI", "Member");

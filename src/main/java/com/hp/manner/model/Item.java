@@ -2,6 +2,7 @@ package com.hp.manner.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,6 +14,7 @@ import java.util.Set;
 
 @Document
 @Data
+@RequiredArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class Item extends AuditableBaseEntity {
 
