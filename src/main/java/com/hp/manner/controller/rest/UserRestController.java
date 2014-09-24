@@ -15,7 +15,7 @@ import com.hp.manner.repository.UserRepository;
 import com.hp.manner.service.UserServiceImpl;
 
 @RestController
-@RequestMapping("/Rest")
+@RequestMapping("/rest")
 public class UserRestController {
 	@Autowired
     private UserServiceImpl userService;
@@ -34,7 +34,7 @@ public class UserRestController {
 		ResponseTemplate response=new ResponseTemplate();
 		List<Object> listUser=new ArrayList<Object>();
 		listUser.add(userRepository.findOne(new ObjectId(userId)));
-		response.setData(TableName.User,listUser);
+		response.addData(TableName.User,listUser);
 		return response;
 	}
 }
