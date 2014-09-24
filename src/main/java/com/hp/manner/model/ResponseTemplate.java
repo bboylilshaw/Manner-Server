@@ -24,8 +24,7 @@ public class ResponseTemplate {
 	private int pageSize;
 	private int pageIndex;
 	
-	public void setData(TableName tableName,List<Object> listObject){
-		data.clear();
+	public void addData(TableName tableName,List<Object> listObject){
 		data.put(tableName, listObject);
 	}
 }
