@@ -1,20 +1,19 @@
 package com.hp.manner.repository;
 
-import com.hp.manner.model.Item;
-import com.hp.manner.model.User;
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import com.hp.manner.domain.Item;
+import com.hp.manner.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.util.List;
 
 @RepositoryRestResource(collectionResourceRel = "items", path = "items")
-public interface ItemRepository extends MongoRepository<Item, ObjectId> {
+public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Override
     @RestResource(exported = false)
-    void delete(ObjectId id);
+    void delete(Long id);
 
     @Override
     @RestResource(exported = false)

@@ -1,6 +1,6 @@
 package com.hp.manner.security;
 
-import com.hp.manner.model.User;
+import com.hp.manner.domain.User;
 import com.hp.manner.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,17 @@ public class UserRepositoryUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
         User user = userRepository.findByEmail(email);
+
         if(user == null) {
-            throw new UsernameNotFoundException("Could not find user " + email);
+            throw new UsernameNotFoundException("Could not find user!");
         }
+
         UserRepositoryUserDetails userDetails = new UserRepositoryUserDetails();
         BeanUtils.copyProperties(user, userDetails);
+        userDetails.setId(user.getId());
+
         return userDetails;
     }
 

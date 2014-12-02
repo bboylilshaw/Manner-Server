@@ -41,26 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .headers().disable()
             .authorizeRequests()
-                .antMatchers("/resources/**", "/signup", "/api/**").permitAll() //FIXME: add authentication for restful web service api call
-                .antMatchers("/admin/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .anyRequest().authenticated()
-                .and()
-            .formLogin()
-                .loginPage("/login").permitAll()
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .loginProcessingUrl("/login")
-                .failureUrl("/login?error")
-                .defaultSuccessUrl("/home")
-                .and()
-            .logout()
-                .logoutUrl("/logout").permitAll()
-                .logoutSuccessUrl("/login?logout")
-                .deleteCookies("JSESSIONID")
-                .and()
-            .rememberMe()
-                .rememberMeServices(rememberMeServices())
-                .key(KEY);
+                .antMatchers("/api/**").permitAll()
+                .anyRequest().permitAll();
     }
 
 }
