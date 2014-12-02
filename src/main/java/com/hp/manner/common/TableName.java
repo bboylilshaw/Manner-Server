@@ -1,4 +1,4 @@
-package com.hp.manner.model;
+package com.hp.manner.common;
 
 public enum TableName {
 	User,

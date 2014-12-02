@@ -1,14 +1,13 @@
-package com.hp.manner.model;
+package com.hp.manner.common;
+
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Data
 @RequiredArgsConstructor
