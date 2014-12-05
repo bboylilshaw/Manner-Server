@@ -30,7 +30,12 @@ import java.util.Date;
 public class Item extends AbstractPersistable<Long> {
 
     @NotEmpty
+    private String title;
+
     private String content;
+
+    @NotEmpty
+    private String itemType;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
