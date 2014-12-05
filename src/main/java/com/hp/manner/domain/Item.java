@@ -18,7 +18,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -33,48 +32,36 @@ public class Item extends AbstractPersistable<Long> {
     @NotEmpty
     private String content;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    @NotNull
     @ManyToOne
     @CreatedBy
     private User createdBy;
 
-    @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @CreatedDate
     private Date createdDate;
 
-    @NotNull
     @ManyToOne
     @LastModifiedBy
     private User lastModifiedBy;
 
-    @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @LastModifiedDate
     private Date lastModifiedDate;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Group group;
 
-    @NotNull
     private Status status;
 
-    @NotNull
     @Min(0) @Max(100)
     private int percentage;
 
-    @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date dueDate;
 
-    @NotNull
     private Priority priority;
 
     private String remarks;
