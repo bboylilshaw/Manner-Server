@@ -1,0 +1,14 @@
+{
+  "content": "task1",
+  "createdDate": "2014-12-04T14:22:48.000+0000",
+  "lastModifiedDate": "2014-12-04T14:22:48.000+0000",
+  "status": "NEW",
+  "percentage": 0,
+  "dueDate": "2014-12-03T16:00:00.000+0000",
+  "priority": "HIGH",
+  "remarks": "note1",
+  "group": "http://localhost:8080/manner/api/groups/1",
+  "lastModifiedBy": "http://localhost:8080/manner/api/users/1",
+  "createdBy": "http://localhost:8080/manner/api/users/1",
+  "owner": "http://localhost:8080/manner/api/users/1"
+}
