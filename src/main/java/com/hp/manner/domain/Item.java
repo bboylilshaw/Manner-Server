@@ -76,8 +76,11 @@ public class Item extends AbstractPersistable<Long> {
     @Min(0) @Max(100)
     private int percentage;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date dueDate;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private Date completionDate;
 
     @NotNull
     private Priority priority;
