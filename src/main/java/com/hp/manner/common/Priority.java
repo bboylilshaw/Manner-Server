@@ -1,5 +1,7 @@
 package com.hp.manner.common;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum Priority {
 
     LOW("Low"),
@@ -13,6 +15,7 @@ public enum Priority {
 
     private String text;
 
+    @JsonValue
     public String getText() {
         return text;
     }

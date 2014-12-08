@@ -1,5 +1,7 @@
 package com.hp.manner.common;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum Status {
 
     NEW("New"),
@@ -12,6 +14,7 @@ public enum Status {
 
     private String text;
 
+    @JsonValue
     public String getText() {
         return text;
     }

@@ -12,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 import java.util.List;
 
-@RepositoryRestResource(collectionResourceRel = "items", path = "items")
+@RepositoryRestResource(collectionResourceRel = "items", path = "/items")
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Override
@@ -31,12 +31,19 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @RestResource(exported = false)
     void deleteAll();
 
-    @RestResource(path = "/owner")
+    @RestResource(rel = "getItemsByOwner", path = "/owner")
     List<Item> findByOwner(@Param("ownerId") User owner);
 
+    @RestResource(rel = "getItemsByGroup", path = "/group")
     List<Item> findByGroup(@Param("groupId") Group group);
 
-    //@RestResource(path = "/owner/count")
-    long countByOwnerAndCompletionDateAfter(@Param("ownerId") User owner, @Param("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date);
+    @RestResource(rel = "countCompletionItemsAfterDate", path = "/countAfterDate")
+    long countByOwnerAndCompletionDateAfter(@Param("ownerId") User owner,
+                                            @Param("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date);
+
+    @RestResource(rel = "countCompletionItemsBetweenDate", path = "/countBetweenDate")
+    long countByOwnerAndCompletionDateBetween(@Param("ownerId") User owner,
+                                              @Param("beginDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date beginDate,
+                                              @Param("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate);
 
 }
