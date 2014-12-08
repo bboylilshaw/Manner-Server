@@ -1,7 +1,6 @@
 package com.hp.manner.repository;
 
 import com.hp.manner.Application;
-import com.hp.manner.common.ItemType;
 import com.hp.manner.common.Priority;
 import com.hp.manner.common.Status;
 import com.hp.manner.domain.Group;
@@ -23,17 +22,14 @@ public class ItemRepositoryTest {
     ItemRepository itemRepository;
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    GroupRepository groupRepository;
 
     @Test
     public void testSave() throws Exception {
-        User user = userRepository.getOne(1L);
-        Group group = groupRepository.getOne(1L);
-        Item item = Item.of("title", "action item 1", ItemType.A, user, user,
-                new Date(), user, new Date(), group, Status.NEW, 0,
-                new Date(), new Date(), Priority.HIGH, "remarks");
-        itemRepository.save(item);
+//        User user = userRepository.getOne(1L);
+//        Group group = new Group();
+//
+////        Item item = Item.of("1", user, user, new Date(), user, new Date(), group, Status.NEW, 0, new Date(), Priority.HIGH, "remarks");
+//
+//        itemRepository.save(item);
     }
-
 }

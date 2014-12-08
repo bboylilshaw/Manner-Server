@@ -38,7 +38,7 @@ public class Item extends AbstractPersistable<Long> {
     private String content;
 
     @NotNull
-    private ItemType itemType;
+    private String itemType;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
