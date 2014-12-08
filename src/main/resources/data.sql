@@ -64,19 +64,20 @@ COMMIT;
 DROP TABLE IF EXISTS `t_item`;
 CREATE TABLE `t_item` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `itemType` varchar(255) NOT NULL,
+  `completion_date` datetime DEFAULT NULL,
   `content` varchar(255) NOT NULL,
-  `created_date` datetime DEFAULT NULL,
+  `created_date` datetime NOT NULL,
   `due_date` datetime DEFAULT NULL,
-  `last_modified_date` datetime DEFAULT NULL,
+  `item_type` varchar(255) NOT NULL,
+  `last_modified_date` datetime NOT NULL,
   `percentage` int(11) NOT NULL,
-  `priority` int(11) DEFAULT NULL,
+  `priority` int(11) NOT NULL,
   `remarks` varchar(255) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `created_by_id` bigint(20) DEFAULT NULL,
-  `group_id` bigint(20) DEFAULT NULL,
-  `last_modified_by_id` bigint(20) DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `created_by_id` bigint(20) NOT NULL,
+  `group_id` bigint(20) NOT NULL,
+  `last_modified_by_id` bigint(20) NOT NULL,
   `owner_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_a1btqirbh4bfq86kxy8ngjlf5` (`created_by_id`),
@@ -87,13 +88,14 @@ CREATE TABLE `t_item` (
   CONSTRAINT `FK_d2ln6ci0ieqf68ldhfgjfghf1` FOREIGN KEY (`group_id`) REFERENCES `t_group` (`id`),
   CONSTRAINT `FK_es8okxw95xalbqt0186iupg3n` FOREIGN KEY (`owner_id`) REFERENCES `t_user` (`id`),
   CONSTRAINT `FK_n0a8lpfgwsdrv3708r9tlo2ra` FOREIGN KEY (`last_modified_by_id`) REFERENCES `t_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `t_item`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_item` VALUES ('1','Finish US-7728','SA', 'task1', '2014-12-04 22:22:48', '2014-12-04 00:00:00', '2014-12-04 22:22:48', '0', '2', 'note1', '0', '1', '1', '1', '1'), ('2','Finish IM18776722','A', 'task2', '2014-12-04 22:23:22', '2014-12-05 00:00:00', '2014-12-04 22:23:22', '50', '3', 'note2', '1', '1', '1', '1', '1');
+INSERT INTO `t_item` VALUES ('1','2014-12-04 22:22:48','Finish US-7728','2014-12-04 22:22:48','2014-12-04 00:00:00','SA', '2014-12-04 22:22:48','65','1','IO','1','Finish US-7728','1', '1', '1', '1'),
+  ('2','2014-12-04 22:22:48','Finish IM788817','2014-12-04 22:22:48','2014-12-04 00:00:00','A', '2014-12-04 22:22:48','45','1','IOo','1','Finish IM788817','1', '1', '1', '1');
 COMMIT;
 
 -- ----------------------------
