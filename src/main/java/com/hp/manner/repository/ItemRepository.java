@@ -31,10 +31,12 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @RestResource(exported = false)
     void deleteAll();
 
+    @RestResource(path = "/owner")
     List<Item> findByOwner(@Param("ownerId") User owner);
 
     List<Item> findByGroup(@Param("groupId") Group group);
 
+    //@RestResource(path = "/owner/count")
     long countByOwnerAndCompletionDateAfter(@Param("ownerId") User owner, @Param("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date);
 
 }

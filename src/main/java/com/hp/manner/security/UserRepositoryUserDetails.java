@@ -13,7 +13,6 @@ import java.util.List;
 
 public class UserRepositoryUserDetails extends User implements UserDetails {
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authList = new ArrayList<>();

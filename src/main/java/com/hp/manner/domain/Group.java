@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -19,17 +20,17 @@ import java.util.HashSet;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
-public class Group extends AbstractPersistable<Long> {
+public class Group extends AbstractPersistable<Long> implements Serializable {
 
     private String name;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date createdDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private User owner;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
             name = "t_group_user",
             joinColumns = @JoinColumn(name = "group_id"),

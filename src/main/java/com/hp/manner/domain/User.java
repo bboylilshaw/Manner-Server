@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -23,7 +24,7 @@ import java.util.HashSet;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
-public class User extends AbstractPersistable<Long> {
+public class User extends AbstractPersistable<Long> implements Serializable {
 
     @NotNull
     private String firstName;
