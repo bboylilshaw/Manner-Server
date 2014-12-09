@@ -32,7 +32,7 @@ public class ItemRepositoryTest {
         Group group = groupRepository.getOne(1L);
         Item item = Item.of("title", "action item 1", ItemType.A, user, user,
                 new Date(), user, new Date(), group, Status.NEW, 0,
-                new Date(), new Date(), Priority.HIGH, "remarks");
+                new Date(), new Date(), Priority.HIGH, "remarks", null);
         itemRepository.save(item);
     }
 

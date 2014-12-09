@@ -5,7 +5,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum ItemType {
 
     A("Action"),
-    P("Personal Item"),
+    R("Reminder"),
+    T("Task"),
+    SA("Shared Action"),
+    ST("Shared Task"),
     N("News");
 
     ItemType(String text) {
