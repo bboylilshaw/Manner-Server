@@ -10,6 +10,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
+import org.springframework.security.web.header.HeaderWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
@@ -39,10 +43,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .csrf().disable()
-            .headers().disable()
+//            .headers().disable()
             .authorizeRequests()
                 .antMatchers("/api/**").permitAll()
                 .anyRequest().permitAll();
+        http.headers().addHeaderWriter(new HeaderWriter() {
+            @Override
+            public void writeHeaders(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+                httpServletResponse.setHeader("Content-Type","application/x-www-form-urlencoded");
+                httpServletResponse.setHeader("Access-Control-Allow-Origin","*");
+                httpServletResponse.setHeader("Access-Control-Allow-Methods","GET,POST,PUT,DELETE");
+                httpServletResponse.setHeader("Access-Control-Max-Age","60");
+            }
+        });
+
     }
 
 }
