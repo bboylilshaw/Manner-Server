@@ -19,7 +19,7 @@ public class Report {
 	private String groupName;
 	private Long groupOwnerId;
 	private Long itemOwnerId;
-	private int itemCount;
+	private Long itemCount;
 	private String content;
 	private Status status;
 }
