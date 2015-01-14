@@ -23,7 +23,7 @@ import com.hp.manner.repository.ItemRepository;
 import com.hp.manner.repository.UserRepository;
 
 @RestController
-@RequestMapping(value="/api",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="/rest",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 public class ReportCtrl {
 	@Autowired
 	UserRepository userRepository;
@@ -51,7 +51,7 @@ public class ReportCtrl {
 			report.setGroupId(group.getId());
 			report.setGroupName(group.getName());
 			report.setGroupOwnerId(userId);
-			Collection<User> listMember=group.getUsers();
+			Collection<User> listMember=groupRepository.findUsers(group.getId());
 			for(User user : listMember){
 				report.setEmail(user.getEmail());
 				report.setFirstName(user.getFirstName());
@@ -66,6 +66,7 @@ public class ReportCtrl {
 			}
 			listReport.add(report);
 		}
+		response.setSuccessful(true);
 		response.addData(TableName.Report, listReport);
 		return response;
 	}

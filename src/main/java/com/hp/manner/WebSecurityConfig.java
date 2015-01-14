@@ -45,12 +45,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
 //            .headers().disable()
             .authorizeRequests()
-                .antMatchers("/api/**").permitAll()
+                .antMatchers("/api/**","/rest/**").permitAll()
                 .anyRequest().permitAll();
         http.headers().addHeaderWriter(new HeaderWriter() {
             @Override
             public void writeHeaders(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-                httpServletResponse.setHeader("Content-Type","application/x-www-form-urlencoded");
+                httpServletResponse.setHeader("Content-Type","application/json");
                 httpServletResponse.setHeader("Access-Control-Allow-Origin","*");
                 httpServletResponse.setHeader("Access-Control-Allow-Methods","GET,POST,PUT,DELETE");
                 httpServletResponse.setHeader("Access-Control-Max-Age","60");

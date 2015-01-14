@@ -43,9 +43,6 @@ public class User extends AbstractPersistable<Long> implements Serializable {
     @NotNull
     private Role role;
 
-    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-    private Collection<Group> groups = new HashSet<>();
-
     @Override
     public String toString() {
         return "User{" +

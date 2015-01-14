@@ -30,17 +30,6 @@ public class Group extends AbstractPersistable<Long> implements Serializable {
     @ManyToOne
     private User owner;
 
-    @ManyToMany
-    @JoinTable(
-            name = "t_group_user",
-            joinColumns = @JoinColumn(name = "group_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Collection<User> users = new HashSet<>();
-
-    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Collection<Item> items = new ArrayList<>();
-
     @Override
     public String toString() {
         return "Group{" +
